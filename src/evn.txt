@@ -1,0 +1,28 @@
+yarn add web3-react-phantom @web3-react/core eventemitter3 @web3-react/types
+
+bgcolor= rgb(28 41 54 )
+
+
+navbg=rgb(19 28 37)
+
+basefontcolor = #c7f284
+
+disabledfont = rgba(232, 249, 255, .5)
+
+hoverfont disabled = rgba(232,249,255,.8)
+
+disabledbuttonbg =linear-gradient(247.44deg,#c7f284 13.88%,#00bef0 99.28%)
+
+activebuttoncolor = rgb(0 188 240)
+
+
+font-size: 0.875rem;
+    line-height: 1.25rem;
+
+    git remote add origin https://github.com/pishnahadebehtar/Jupiter-DEX-Clone.git
+
+    git push -f origin main
+
+
+    git pull Jupiter-DEX-Clone main --allow-unrelated-histories
+git remote add origin https://github.com/pishnahadebehtar/jupiter.git
