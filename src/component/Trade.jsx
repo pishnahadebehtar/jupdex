@@ -382,9 +382,7 @@ function Trade() {
                 }}
                 startIcon={
                   <img
-                    src={`../assets/${
-                      tokendata[swapPrams.SwapTokenToBuyId].name
-                    }.png`}
+                    src={`/assets/bitcoin.png`}
                     width="20px"
                     height={"20px"}
                     alt={tokendata[swapPrams.SwapTokenToBuyId].name}
