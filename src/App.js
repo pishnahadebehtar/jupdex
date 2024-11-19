@@ -8,8 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import Create from "./component/Create.jsx";
 import SideBar from "./component/SideBar.jsx";
 import Spot from "./component/Spot.jsx";
-//thestfd
-//sad
+
 function App() {
   const isMenuOpen = useSelector((state) => state.ModeSlice.isMenuOpen);
   const mode = useSelector((state) => state.ModeSlice.mode);
