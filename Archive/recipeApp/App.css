@@ -1,0 +1,134 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poetsen One";
+  width: 98vw;
+  min-height: 100vh;
+  background-position: center;
+  background-size: cover;
+  overflow-x: hidden;
+  transition: 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  color: rgb(255, 255, 255);
+  margin-top: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 100vh;
+  align-items: center;
+}
+button {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 5vw;
+  border: none;
+  color: black;
+  font-family: "Poetsen One";
+  padding: 1vw;
+  font-size: large;
+  margin: 1vw;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.6);
+}
+button:hover {
+  background-color: rgba(84, 15, 232, 0.802);
+  color: white;
+}
+input {
+  width: 90%;
+  cursor: pointer;
+  border-radius: 5vw;
+  padding: 1vw;
+  font-size: large;
+  outline: none;
+  border: none;
+  font-family: "Courier New", Courier, monospace;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.6);
+}
+
+.search {
+  width: 70vw;
+  min-height: 8vh;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  color: whitesmoke;
+}
+
+.box {
+  width: 70vw;
+  min-height: 15vh;
+  border: 1px solid black;
+  font-weight: bolder;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+  flex-direction: column;
+  font-family: "Courier New", Courier, monospace;
+  color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(255, 255, 255, 0.522);
+  cursor: pointer;
+}
+.nav {
+  width: 85vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 5px;
+}
+a {
+  color: white;
+  text-decoration: none;
+  margin: 2vw;
+}
+a:hover {
+  color: blueviolet;
+}
+.home {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15vh;
+}
+.user {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15vh;
+}
+.recipe {
+  width: 22vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vw;
+  border: 1px solid black;
+  min-height: 100vh;
+  border-radius: 1vw;
+}
+img {
+  border-radius: 15px;
+  width: 20vw;
+}

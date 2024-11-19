@@ -1,0 +1,32 @@
+const weatherCode = [
+  [0, "Clear Sky", "FaSun"],
+  [1, "MainlyClear", "FaSun"],
+  [2, "Partly Cloudy", "FaCloud"],
+  [3, "Overcast", "FaSun"],
+  [48, "Fog", "FaCloud"],
+  [45, "Fog", "FaCloud"],
+  [51, "Drizzle", "FaWind"],
+  [53, "Drizzle", "FaWind"],
+  [55, "Drizzle", "FaWind"],
+  [56, "Freezing Drizzle", "FaWind"],
+  [57, "Freezing Drizzle", "FaWind"],
+  [61, "Rain", "FaCloudRain"],
+  [63, "Rain", "FaCloudRain"],
+  [65, "Heavy Rain", "FaCloudRain"],
+  [66, "Rain", "FaCloudRain"],
+  [67, "Heavy Rain", "FaCloudRain"],
+  [71, "Snow", "FaSnowflake"],
+  [73, "Snow", "FaSnowflake"],
+  [75, "Heavy Snow", "FaSnowflake"],
+  [77, "Snow", "FaSnowflake"],
+  [80, "Rain Shower", "FaCloudRain"],
+  [81, "Rain Shower", "FaCloudRain"],
+  [82, "Rain Shower", "FaCloudRain"],
+  [85, "Snow Shower", "FaSnowflake"],
+  [86, "Snow Shower", "FaSnowflake"],
+  [95, "Thunder Storm", "FaSnowflake"],
+  [96, "Thunder Storm", "FaSnowflake"],
+];
+
+export default weatherCode;
+
