@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/jupdex/static/css/main.aceba15d.css",
-    "main.js": "/jupdex/static/js/main.74f88eff.js",
+    "main.js": "/jupdex/static/js/main.17a2ba19.js",
     "static/media/logo.png": "/jupdex/static/media/logo.cd15d39fcbe9f213779a.png",
     "index.html": "/jupdex/index.html",
     "main.aceba15d.css.map": "/jupdex/static/css/main.aceba15d.css.map",
-    "main.74f88eff.js.map": "/jupdex/static/js/main.74f88eff.js.map"
+    "main.17a2ba19.js.map": "/jupdex/static/js/main.17a2ba19.js.map"
   },
   "entrypoints": [
     "static/css/main.aceba15d.css",
-    "static/js/main.74f88eff.js"
+    "static/js/main.17a2ba19.js"
   ]
 }
