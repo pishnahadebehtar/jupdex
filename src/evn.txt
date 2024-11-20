@@ -47,7 +47,7 @@ Great to hear that your project is now visible on your GitHub Pages site! To ref
      ```
    - Commit your changes with a descriptive message:
      ```bash
-     git commit -m "Describe the changes you made"
+    
      ```
 
 3. **Push Changes to GitHub**:
