@@ -17,7 +17,7 @@ import SelectToken from "./SelectToken.jsx";
 import { updateSwap } from "../state/SwapSlice.js";
 import tokenListData from "../assets/tokenData.js";
 function Spot() {
-  const matches = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery("(min-width:800px)");
   const theme = useTheme();
   const [clockChecked, setClockChecked] = React.useState(false);
   const [active, setActive] = React.useState("swap");
@@ -43,50 +43,79 @@ function Spot() {
     localStorage.setItem("SettingState", JSON.stringify(SettingState)); // Save the state to local storage because of Auto and manual button
   }, [SettingState]);
   const SwapPrams = useSelector((state) => state.SwapSlice);
-  const [PriceData, SetPriceData] = useState("");
-  async function PriceApi() {
-    try {
-      fetch(
-        `https://rest.coinapi.io/v1/exchangerate/${
-          tokenListData.filter(
-            (token) => token.id === SwapPrams.SwapTokenToSellId
-          )[0].symbol
-        }/${
-          tokenListData.filter(
-            (token) => token.id === SwapPrams.SwapTokenToBuyId
-          )[0].symbol
-        }`,
-        {
-          headers: {
-            "X-CoinAPI-Key": "API_KEy", // Replace with your API key
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => SetPriceData(data))
-        .catch((error) => console.error("Error:", error));
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  const [PriceData, SetPriceData] = useState(0.0);
+
   // for calling the price function then sell amount changes
   useEffect(() => {
-    PriceApi();
-    if (PriceData) {
-      dispatch(
-        updateSwap({
-          Type: "BuyAmount",
-          Value: PriceData.rate * SwapPrams.SellAmount,
-        })
-      );
+    async function PriceApi() {
+      try {
+        fetch(
+          `https://rest.coinapi.io/v1/exchangerate/${
+            tokenListData.filter(
+              (token) => token.id === SwapPrams.SwapTokenToSellId
+            )[0].symbol
+          }/${
+            tokenListData.filter(
+              (token) => token.id === SwapPrams.SwapTokenToBuyId
+            )[0].symbol
+          }`,
+          {
+            headers: {
+              "X-CoinAPI-Key": "API_KEy", // Replace with your API key
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => (data ? SetPriceData(data) : console.log("Error:")))
+          .catch((error) => console.error("Error:", error));
+      } catch (error) {
+        console.log(error.message);
+      }
     }
-  }, [SwapPrams, PriceData, dispatch]);
-  console.log(PriceData);
+    PriceApi();
+  }, [SwapPrams, dispatch]);
+  useEffect(() => {
+    console.log(!PriceData.error);
+
+    dispatch(
+      updateSwap({
+        Type: "BuyAmount",
+        Value: PriceData.rate ? PriceData.rate * SwapPrams.SellAmount : 0,
+      })
+    );
+  }, [SwapPrams, PriceData]);
+
   //body of component starts here
   return (
     <Box>
       {SettingPageOpen ? <SwapSetting /> : false}
       {SelectSwapTokenOpen === "Open" ? <SelectToken /> : false}
+      {matches ? (
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: "-38vh",
+            left: "-17vw",
+            transition: "5.5s",
+            opacity: 1,
+            "& :hover": {
+              transform: "translate(200px, -200px)",
+              transition: "1s",
+              opacity: 0,
+            },
+          }}
+        >
+          <img
+            src={require("../assets/mobilemascot.png")}
+            alt="mobilemascot"
+            width="300px"
+            height="300px"
+          />
+        </Box>
+      ) : (
+        false
+      )}
+
       <Box
         p={2}
         minHeight={"100vh"}
@@ -94,9 +123,9 @@ function Spot() {
         flexDirection={"column"}
         justifyContent={"flex-start"}
         gap={2}
+        width={matches ? "50vw" : "95vw"}
       >
         <Box
-          width={matches ? "50vw" : "95vw"}
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
@@ -230,7 +259,6 @@ function Spot() {
           </IconButton>
         </Box>
         <Box
-          width={matches ? "50vw" : "95vw"}
           display={"flex"}
           justifyContent={"space-between"}
           alignItems={"center"}
@@ -307,16 +335,16 @@ function Spot() {
                   height: "2rem",
                   bgcolor: theme.palette.background.dark,
                 }}
+                onClick={() =>
+                  dispatch(
+                    updateSettingStates({
+                      SettingName: "SwapSettingOpen",
+                      SettingValue: true,
+                    })
+                  )
+                }
               >
                 <SettingsIcon
-                  onClick={() =>
-                    dispatch(
-                      updateSettingStates({
-                        SettingName: "SwapSettingOpen",
-                        SettingValue: true,
-                      })
-                    )
-                  }
                   sx={{
                     color: theme.palette.secondary.main,
                     minWidth: "1.25rem",

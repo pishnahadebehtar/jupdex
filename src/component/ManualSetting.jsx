@@ -32,26 +32,48 @@ function ManualSetting() {
         justifyContent="space-between"
         gap={2}
       >
-        <Typography variant="h4" fontSize={"1.2rem"} color={grey[200]}>
-          Slippage
-        </Typography>
+        <Typography color={theme.palette.secondary.light}>Slippage</Typography>
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
           width="100%"
         >
-          <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
+          <Typography color={theme.palette.secondary.main}>
             Slippage Mode
           </Typography>
 
-          <ButtonGroup>
+          <Box
+            sx={{
+              bgcolor: theme.palette.background.dark,
+              padding: "0.1rem",
+              borderRadius: "1.2rem",
+            }}
+          >
             <Button
               color={
                 SettingState.SlippageMode === "dynamic"
                   ? "primary"
                   : "secondary"
               }
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.SlippageMode === "dynamic"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.SlippageMode === "dynamic"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               onClick={() => {
                 dispatch(
                   updateSettingStates({
@@ -64,6 +86,24 @@ function ManualSetting() {
               Dynamic
             </Button>
             <Button
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.SlippageMode !== "dynamic"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.SlippageMode !== "dynamic"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               color={
                 SettingState.SlippageMode === "dynamic"
                   ? "secondary"
@@ -80,7 +120,7 @@ function ManualSetting() {
             >
               Fixed
             </Button>
-          </ButtonGroup>
+          </Box>
         </Box>
         {SettingState.SlippageMode === "dynamic" ? (
           <Box
@@ -89,12 +129,39 @@ function ManualSetting() {
             alignItems="center"
             width="100%"
           >
-            <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
+            <Typography color={theme.palette.secondary.main}>
               Fixed Slippage
             </Typography>
 
-            <ButtonGroup sx={{ maxWidth: "50%" }}>
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              sx={{
+                bgcolor: theme.palette.background.dark,
+                maxWidth: "50%",
+                borderRadius: "1.2rem",
+              }}
+            >
               <Button
+                sx={{
+                  margin: "0.2rem",
+                  borderRadius: "1.2rem",
+                  bgcolor:
+                    SettingState.FixedSlippage === 0.5
+                      ? "rgba(199, 242, 132, 0.1)"
+                      : "rgba(19,27,36,.1)",
+
+                  color:
+                    SettingState.FixedSlippage === 0.5
+                      ? theme.palette.primary.main
+                      : theme.palette.secondary.main,
+                  "&:hover": {
+                    bgcolor: "rgba(199, 242, 132, 0.1)",
+                    color: theme.palette.secondary.light,
+                  },
+                  fontSize: "0.8rem",
+                }}
                 color={
                   SettingState.FixedSlippage === 0.5 ? "primary" : "secondary"
                 }
@@ -111,6 +178,24 @@ function ManualSetting() {
                 0.5%
               </Button>
               <Button
+                sx={{
+                  margin: "0.2rem",
+                  borderRadius: "1.2rem",
+                  bgcolor:
+                    SettingState.FixedSlippage === 1
+                      ? "rgba(199, 242, 132, 0.1)"
+                      : "rgba(19,27,36,.1)",
+
+                  color:
+                    SettingState.FixedSlippage === 1
+                      ? theme.palette.primary.main
+                      : theme.palette.secondary.main,
+                  "&:hover": {
+                    bgcolor: "rgba(199, 242, 132, 0.1)",
+                    color: theme.palette.secondary.light,
+                  },
+                  fontSize: "0.8rem",
+                }}
                 color={
                   SettingState.FixedSlippage === 1 ? "primary" : "secondary"
                 }
@@ -126,36 +211,33 @@ function ManualSetting() {
               >
                 1%
               </Button>
-            </ButtonGroup>
-            <TextField
-              id="FixedSlippage"
-              type="number"
-              slotProps={{
-                inputLabel: {
-                  shrink: true,
-                },
-              }}
-              size="small"
-              sx={{
-                "& .MuiInputBase-input": {
-                  color: "white",
-                },
-              }}
-              color="background"
-              placeholder="0.00%"
-              onChange={(e) => {
-                dispatch(
-                  updateSettingStates({
-                    SettingName: "FixedSlippage",
-                    SettingValue: `${e.target.value}`,
-                  })
-                );
-                SetFixedSlippageButtonPushed(false);
-              }}
-              value={
-                FixedSlippageButtonPushed ? "" : SettingState.FixedSlippage
-              }
-            />
+              <TextField
+                size="small"
+                sx={{
+                  "& .MuiInputBase-input": {
+                    color: "white",
+                  },
+                }}
+                color="background"
+                placeholder="0.00%"
+                value={
+                  FixedSlippageButtonPushed ? "" : SettingState.FixedSlippage
+                }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+                  if (value.match(regex) || value === "") {
+                    dispatch(
+                      updateSettingStates({
+                        SettingName: "FixedSlippage",
+                        SettingValue: value,
+                      })
+                    );
+                    SetFixedSlippageButtonPushed(false);
+                  }
+                }}
+              />
+            </Box>
           </Box>
         ) : null}
         {SettingState.SlippageMode === "fixed" ? (
@@ -165,18 +247,11 @@ function ManualSetting() {
             alignItems="center"
             width="100%"
           >
-            <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
+            <Typography color={theme.palette.secondary.main}>
               Max Slippage
             </Typography>
 
             <TextField
-              id="MaxSlippage"
-              type="number"
-              slotProps={{
-                inputLabel: {
-                  shrink: true,
-                },
-              }}
               size="small"
               sx={{
                 "& .MuiInputBase-input": {
@@ -185,22 +260,26 @@ function ManualSetting() {
               }}
               color="background"
               placeholder="0.00%"
-              onChange={(e) => {
-                dispatch(
-                  updateSettingStates({
-                    SettingName: "MaxSlippage",
-                    SettingValue: `${e.target.value}`,
-                  })
-                );
-              }}
               value={SettingState.MaxSlippage}
+              onChange={(e) => {
+                const value = e.target.value;
+                const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+                if (value.match(regex) || value === "") {
+                  dispatch(
+                    updateSettingStates({
+                      SettingName: "MaxSlippage",
+                      SettingValue: value,
+                    })
+                  );
+                }
+              }}
             />
           </Box>
         ) : null}
       </Box>
       <Divider
         sx={{
-          bgcolor: grey[600],
+          bgcolor: theme.palette.secondary.main,
           height: "1px",
           display: "flex",
           alignItems: "center",
@@ -216,7 +295,7 @@ function ManualSetting() {
         width="100%"
         gap={2}
       >
-        <Typography variant="h4" fontSize={"1.2rem"} color={grey[200]}>
+        <Typography color={theme.palette.secondary.light}>
           Transaction Broadcasting
         </Typography>
         <Box
@@ -225,12 +304,39 @@ function ManualSetting() {
           alignItems="center"
           width="100%"
         >
-          <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
+          <Typography color={theme.palette.secondary.main}>
             Broadcast Mode
           </Typography>
 
-          <ButtonGroup>
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{
+              bgcolor: theme.palette.background.dark,
+              maxWidth: "70%",
+              borderRadius: "1.2rem",
+            }}
+          >
             <Button
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.BroadcastMode === "PriorityFee"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.BroadcastMode === "PriorityFee"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               color={
                 SettingState.BroadcastMode === "PriorityFee"
                   ? "primary"
@@ -248,6 +354,24 @@ function ManualSetting() {
               Priority Fee
             </Button>
             <Button
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.BroadcastMode === "JitoOnly"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.BroadcastMode === "JitoOnly"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               color={
                 SettingState.BroadcastMode === "JitoOnly"
                   ? "primary"
@@ -265,6 +389,24 @@ function ManualSetting() {
               Jito Only
             </Button>
             <Button
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.BroadcastMode === "Both"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.BroadcastMode === "Both"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               color={
                 SettingState.BroadcastMode === "Both" ? "primary" : "secondary"
               }
@@ -279,7 +421,7 @@ function ManualSetting() {
             >
               Both
             </Button>
-          </ButtonGroup>
+          </Box>
         </Box>
         {SettingState.FeeMode === "MaxCap" ? (
           <Box
@@ -288,11 +430,33 @@ function ManualSetting() {
             alignItems="center"
             width="100%"
           >
-            <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
-              Speed
-            </Typography>
-            <ButtonGroup>
+            <Typography color={theme.palette.secondary.main}>Speed</Typography>
+            <Box
+              sx={{
+                bgcolor: theme.palette.background.dark,
+                padding: "0.1rem",
+                borderRadius: "1.2rem",
+              }}
+            >
               <Button
+                sx={{
+                  margin: "0.2rem",
+                  borderRadius: "1.2rem",
+                  bgcolor:
+                    SettingState.Speed === "Fast"
+                      ? "rgba(199, 242, 132, 0.1)"
+                      : "rgba(19,27,36,.1)",
+
+                  color:
+                    SettingState.Speed === "Fast"
+                      ? theme.palette.primary.main
+                      : theme.palette.secondary.main,
+                  "&:hover": {
+                    bgcolor: "rgba(199, 242, 132, 0.1)",
+                    color: theme.palette.secondary.light,
+                  },
+                  fontSize: "0.8rem",
+                }}
                 color={SettingState.Speed === "Fast" ? "primary" : "secondary"}
                 onClick={() => {
                   dispatch(
@@ -306,6 +470,24 @@ function ManualSetting() {
                 Fast
               </Button>
               <Button
+                sx={{
+                  margin: "0.2rem",
+                  borderRadius: "1.2rem",
+                  bgcolor:
+                    SettingState.Speed === "Turbo"
+                      ? "rgba(199, 242, 132, 0.1)"
+                      : "rgba(19,27,36,.1)",
+
+                  color:
+                    SettingState.Speed === "Turbo"
+                      ? theme.palette.primary.main
+                      : theme.palette.secondary.main,
+                  "&:hover": {
+                    bgcolor: "rgba(199, 242, 132, 0.1)",
+                    color: theme.palette.secondary.light,
+                  },
+                  fontSize: "0.8rem",
+                }}
                 color={SettingState.Speed === "Turbo" ? "primary" : "secondary"}
                 onClick={() => {
                   dispatch(
@@ -319,6 +501,24 @@ function ManualSetting() {
                 Turbo
               </Button>
               <Button
+                sx={{
+                  margin: "0.2rem",
+                  borderRadius: "1.2rem",
+                  bgcolor:
+                    SettingState.Speed === "Ultra"
+                      ? "rgba(199, 242, 132, 0.1)"
+                      : "rgba(19,27,36,.1)",
+
+                  color:
+                    SettingState.Speed === "Ultra"
+                      ? theme.palette.primary.main
+                      : theme.palette.secondary.main,
+                  "&:hover": {
+                    bgcolor: "rgba(199, 242, 132, 0.1)",
+                    color: theme.palette.secondary.light,
+                  },
+                  fontSize: "0.8rem",
+                }}
                 color={SettingState.Speed === "Ultra" ? "primary" : "secondary"}
                 onClick={() => {
                   dispatch(
@@ -331,7 +531,7 @@ function ManualSetting() {
               >
                 Ultra
               </Button>
-            </ButtonGroup>
+            </Box>
           </Box>
         ) : null}
         <Box
@@ -340,12 +540,37 @@ function ManualSetting() {
           alignItems="center"
           width="100%"
         >
-          <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
-            Fee Mode
-          </Typography>
+          <Typography color={theme.palette.secondary.main}>Fee Mode</Typography>
 
-          <ButtonGroup>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            sx={{
+              bgcolor: theme.palette.background.dark,
+              padding: "0.1rem",
+              borderRadius: "1.2rem",
+            }}
+          >
             <Button
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.FeeMode === "MaxCap"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.FeeMode === "MaxCap"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               color={
                 SettingState.FeeMode === "MaxCap" ? "primary" : "secondary"
               }
@@ -361,6 +586,24 @@ function ManualSetting() {
               Max Cap
             </Button>
             <Button
+              sx={{
+                margin: "0.2rem",
+                borderRadius: "1.2rem",
+                bgcolor:
+                  SettingState.FeeMode === "ExactFee"
+                    ? "rgba(199, 242, 132, 0.1)"
+                    : "rgba(19,27,36,.1)",
+
+                color:
+                  SettingState.FeeMode === "ExactFee"
+                    ? theme.palette.primary.main
+                    : theme.palette.secondary.main,
+                "&:hover": {
+                  bgcolor: "rgba(199, 242, 132, 0.1)",
+                  color: theme.palette.secondary.light,
+                },
+                fontSize: "0.8rem",
+              }}
               color={
                 SettingState.FeeMode === "ExactFee" ? "primary" : "secondary"
               }
@@ -375,7 +618,7 @@ function ManualSetting() {
             >
               Exact Fee
             </Button>
-          </ButtonGroup>
+          </Box>
         </Box>
         <Box
           display="flex"
@@ -383,18 +626,11 @@ function ManualSetting() {
           alignItems="center"
           width="100%"
         >
-          <Typography variant="h4" fontSize={"1rem"} color={grey[700]}>
+          <Typography color={theme.palette.secondary.main}>
             {SettingState.FeeMode === "MaxCap" ? "Set Max Cap" : "Exact Fee"}
           </Typography>
 
           <TextField
-            id="FeeCap"
-            type="number"
-            slotProps={{
-              inputLabel: {
-                shrink: true,
-              },
-            }}
             size="small"
             sx={{
               "& .MuiInputBase-input": {
@@ -404,12 +640,16 @@ function ManualSetting() {
             color="background"
             placeholder="0.00 SOL"
             onChange={(e) => {
-              dispatch(
-                updateSettingStates({
-                  SettingName: "FeeCap",
-                  SettingValue: `${e.target.value}`,
-                })
-              );
+              const value = e.target.value;
+              const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+              if (value.match(regex) || value === "") {
+                dispatch(
+                  updateSettingStates({
+                    SettingName: "FeeCap",
+                    SettingValue: value,
+                  })
+                );
+              }
             }}
             value={SettingState.FeeCap}
           />
@@ -417,7 +657,7 @@ function ManualSetting() {
       </Box>
       <Divider
         sx={{
-          bgcolor: grey[600],
+          bgcolor: theme.palette.secondary.main,
           height: "1px",
           display: "flex",
           alignItems: "center",
@@ -434,7 +674,7 @@ function ManualSetting() {
             expandIcon={<ExpandMoreIcon color="secondary" />}
             aria-controls="advanced settings"
             id="advanced-settings"
-            sx={{ color: grey[200] }}
+            sx={{ color: theme.palette.secondary.light, fontWeight: 800 }}
           >
             Advanced Settings
           </AccordionSummary>

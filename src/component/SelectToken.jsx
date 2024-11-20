@@ -132,7 +132,10 @@ function SelectToken() {
               .filter((token) =>
                 search === ""
                   ? true
-                  : token.name.toLowerCase().includes(search.toLowerCase())
+                  : token.name.toLowerCase().includes(search.toLowerCase()) ||
+                    token.symbol
+                      .toLocaleLowerCase()
+                      .includes(search.toLocaleLowerCase())
               )
               .map((token, index) => (
                 <Box
@@ -176,7 +179,7 @@ function SelectToken() {
                     }}
                   >
                     <img
-                      src={`../assets/${token.name}.png`}
+                      src={require(`../assets/${token.name}.png`)}
                       width="35px"
                       height="35px"
                       alt={token.name}

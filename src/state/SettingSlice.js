@@ -87,6 +87,7 @@ const SettingSlice = createSlice({
           break;
         case "SwapSettingState":
           state.SwapSettingState = action.payload.SettingValue;
+          break;
         default:
           console.log("Error on dispatch");
           break;

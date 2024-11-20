@@ -5,8 +5,8 @@ const SwapSlice = createSlice({
   initialState: {
     SelectSwapTokenSide: "Sell",
     SelectSwapTokenOpen: "Closed",
-    BuyAmount: "",
-    SellAmount: "",
+    BuyAmount: 0,
+    SellAmount: 0,
     SwapTokenToBuyId: 3,
     SwapTokenToSellId: 2,
   },

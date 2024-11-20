@@ -22,6 +22,7 @@ function Trade() {
   const [progress, setProgress] = React.useState(0);
   const [selected, setSelected] = useState("NotSelected");
   const swapPrams = useSelector((state) => state.SwapSlice);
+
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
@@ -102,7 +103,6 @@ function Trade() {
               <Typography
                 color={theme.palette.secondary.light}
                 sx={{ letterSpacing: "0.01px" }}
-                fontSize="0.875rem"
               >
                 You're Selling
               </Typography>
@@ -181,9 +181,9 @@ function Trade() {
                 }}
                 startIcon={
                   <img
-                    src={`../assets/${
+                    src={require(`../assets/${
                       tokendata[swapPrams.SwapTokenToSellId].name
-                    }.png`}
+                    }.png`)}
                     width="20px"
                     height={"20px"}
                     alt={tokendata[swapPrams.SwapTokenToSellId].name}
@@ -203,11 +203,6 @@ function Trade() {
               </Button>
               <TextField
                 id="BuyingAmount"
-                slotProps={{
-                  inputLabel: {
-                    shrink: true,
-                  },
-                }}
                 variant="standard"
                 sx={{
                   minWidth: "15%",
@@ -244,12 +239,13 @@ function Trade() {
         }}
       >
         <IconButton
+          size="small"
           sx={{
             color: theme.palette.secondary.main,
             bgcolor: theme.palette.background.default,
             border: `2px solid ${theme.palette.background.dark}`,
             transition: "0.2s",
-            fontSize: "1.3rem",
+
             "&:hover": {
               border: `2px solid ${theme.palette.primary.main}`,
               color: theme.palette.primary.main,
@@ -328,7 +324,6 @@ function Trade() {
               <Typography
                 color={theme.palette.secondary.light}
                 sx={{ letterSpacing: "0.01px" }}
-                fontSize="0.875rem"
               >
                 You're Buying
               </Typography>
@@ -339,7 +334,6 @@ function Trade() {
                 alignItems={"center"}
               >
                 <Typography
-                  variant="h4"
                   color={theme.palette.secondary.main}
                   display={"flex"}
                   alignItems={"center"}
@@ -375,7 +369,7 @@ function Trade() {
                 }}
                 startIcon={
                   <img
-                    src={require(`${
+                    src={require(`../assets/${
                       tokendata[swapPrams.SwapTokenToBuyId].name
                     }.png`)}
                     width="20px"
@@ -400,11 +394,6 @@ function Trade() {
               </Button>
               <TextField
                 id="BuyingAmount"
-                slotProps={{
-                  inputLabel: {
-                    shrink: true,
-                  },
-                }}
                 variant="standard"
                 sx={{
                   minWidth: "15%",
@@ -464,9 +453,11 @@ function Trade() {
       <Button
         variant="contained"
         sx={{
+          fontSize: "1rem",
+          fontWeight: "bold",
           "&:disabled": {
-            color: theme.palette.primary.dark,
-            bgcolor: theme.palette.background.dark,
+            bgcolor: theme.palette.primary.light,
+            color: theme.palette.background.default,
           },
           height: "4rem",
           borderRadius: "0.5rem",
@@ -477,7 +468,7 @@ function Trade() {
           ? "Swap"
           : "Entre An Amount"}
       </Button>
-      {swapPrams.BuyAmount !== "" ? (
+      {swapPrams.BuyAmount !== 0 ? (
         <Box
           display={"flex"}
           alignItems={"center"}
