@@ -80,14 +80,7 @@ function Spot() {
         })
       );
     }
-  }, [
-    SwapPrams.SellAmount,
-    SwapPrams.SwapTokenToBuyId,
-    SwapPrams.SwapTokenToSellId,
-    PriceData,
-    PriceApi,
-    dispatch,
-  ]);
+  }, [SwapPrams, PriceData, dispatch]);
   console.log(PriceData);
   //body of component starts here
   return (

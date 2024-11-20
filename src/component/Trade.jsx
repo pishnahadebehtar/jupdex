@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useSelector, useDispatch } from "react-redux";
@@ -484,7 +477,7 @@ function Trade() {
           ? "Swap"
           : "Entre An Amount"}
       </Button>
-      {swapPrams.BuyAmount != "" ? (
+      {swapPrams.BuyAmount !== "" ? (
         <Box
           display={"flex"}
           alignItems={"center"}

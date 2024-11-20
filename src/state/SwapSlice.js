@@ -30,6 +30,10 @@ const SwapSlice = createSlice({
           break;
         case "SelectSwapTokenSide":
           state.SelectSwapTokenSide = action.payload.Value;
+          break;
+        default:
+          console.log("Error on dispatch");
+          break;
       }
     },
   },

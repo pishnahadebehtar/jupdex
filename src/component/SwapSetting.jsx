@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  CardContent,
-  CardHeader,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { updateSettingStates } from "../state/SettingSlice";
@@ -41,7 +34,7 @@ function SwapSetting() {
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
         WebkitBoxShadow: `0 0 0.25rem  ${theme.palette.primary.main}`,
-        WebkitBackdropFilter: `blur(10px)`,
+
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -139,11 +132,11 @@ function SwapSetting() {
                     margin: "0.2rem",
                     borderRadius: "1.2rem",
                     bgcolor:
-                      SwapSettingState != "Auto"
+                      SwapSettingState !== "Auto"
                         ? theme.palette.background.default
                         : "rgba(19,27,36,0.1)",
                     color:
-                      SwapSettingState != "Auto"
+                      SwapSettingState !== "Auto"
                         ? theme.palette.info.dark
                         : theme.palette.secondary.main,
                     "&:hover": {
