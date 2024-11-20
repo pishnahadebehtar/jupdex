@@ -1,14 +1,25 @@
 {
   "files": {
     "main.css": "/jupdex/static/css/main.aceba15d.css",
-    "main.js": "/jupdex/static/js/main.574f7b38.js",
+    "main.js": "/jupdex/static/js/main.e325744a.js",
+    "static/media/doge.png": "/jupdex/static/media/doge.a9424efadeaad7cd97e7.png",
     "static/media/logo.png": "/jupdex/static/media/logo.cd15d39fcbe9f213779a.png",
+    "static/media/eth.png": "/jupdex/static/media/eth.a85b6de0dc4a013ae2f8.png",
+    "static/media/solana.png": "/jupdex/static/media/solana.88dd9cd2498aebe1ee8c.png",
+    "static/media/bnb.png": "/jupdex/static/media/bnb.27f54c9b112c188df5b5.png",
+    "static/media/dot.png": "/jupdex/static/media/dot.f6a28fa08b3298a9a296.png",
+    "static/media/bitcoin.png": "/jupdex/static/media/bitcoin.82491fef997ab841639c.png",
+    "static/media/ton.png": "/jupdex/static/media/ton.cf913d6bfd2d2cb65fcf.png",
+    "static/media/tether.png": "/jupdex/static/media/tether.c1d587669942a5e9bc47.png",
+    "static/media/mobilemascot.png": "/jupdex/static/media/mobilemascot.524cbb079271492c25f1.png",
+    "static/media/xrp.png": "/jupdex/static/media/xrp.a30ac2af14f2c3a5461a.png",
+    "static/media/avax.png": "/jupdex/static/media/avax.e1fb45e8e070674b1a54.png",
     "index.html": "/jupdex/index.html",
     "main.aceba15d.css.map": "/jupdex/static/css/main.aceba15d.css.map",
-    "main.574f7b38.js.map": "/jupdex/static/js/main.574f7b38.js.map"
+    "main.e325744a.js.map": "/jupdex/static/js/main.e325744a.js.map"
   },
   "entrypoints": [
     "static/css/main.aceba15d.css",
-    "static/js/main.574f7b38.js"
+    "static/js/main.e325744a.js"
   ]
 }
