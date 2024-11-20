@@ -32,7 +32,6 @@ function SelectToken() {
         backdropFilter: "blur(10px)",
         WebkitBackdropFilter: "blur(10px)",
         WebkitBoxShadow: `0 0 0.25rem  ${theme.palette.primary.main}`,
-        WebkitBackdropFilter: `blur(10px)`,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "./component/Home.jsx";
+
 import Nav from "./component/Nav.jsx";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material";
-import Create from "./component/Create.jsx";
+
 import SideBar from "./component/SideBar.jsx";
 import Spot from "./component/Spot.jsx";
 
@@ -60,9 +60,8 @@ function App() {
         <Nav />
         <Box marginTop={"15vh"}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/create" element={<Create />} />
-            <Route path="/spot" element={<Spot />} />
+            <Route path="/" element={<Spot />} />
+            <Route path="/jupdex" element={<Spot />} />
           </Routes>
         </Box>
       </Box>

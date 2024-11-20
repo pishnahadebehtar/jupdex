@@ -1,11 +1,11 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+
 import { ClockIcon } from "@mui/x-date-pickers";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material";
-import { Mode } from "@mui/icons-material";
+
 import ReplayIcon from "@mui/icons-material/Replay";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Trade from "./Trade.jsx";
@@ -13,7 +13,7 @@ import SwapSetting from "./SwapSetting.jsx";
 import { updateSettingStates } from "../state/SettingSlice";
 import { useSelector, useDispatch } from "react-redux";
 import SelectToken from "./SelectToken.jsx";
-import TradingViewWidget from "./TradingViewWidget.jsx";
+
 import { updateSwap } from "../state/SwapSlice.js";
 import tokenListData from "../assets/tokenData.js";
 function Spot() {
@@ -84,6 +84,9 @@ function Spot() {
     SwapPrams.SellAmount,
     SwapPrams.SwapTokenToBuyId,
     SwapPrams.SwapTokenToSellId,
+    PriceData,
+    PriceApi,
+    dispatch,
   ]);
   console.log(PriceData);
   //body of component starts here

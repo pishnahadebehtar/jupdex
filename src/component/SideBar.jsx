@@ -61,24 +61,6 @@ function SideBar() {
               Home
             </Button>
           </Link>
-          <Link to="/create">
-            <Button
-              startIcon={<AddIcon />}
-              variant="contained"
-              sx={{ width: "200px" }}
-            >
-              Create
-            </Button>
-          </Link>
-          <Link to="/spot">
-            <Button
-              startIcon={<Money />}
-              variant="contained"
-              sx={{ width: "200px" }}
-            >
-              Spot
-            </Button>
-          </Link>
         </Box>
 
         <Button
