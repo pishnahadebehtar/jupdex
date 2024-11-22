@@ -53,7 +53,7 @@ function Trade() {
         }
         sx={{
           width: "100%",
-          minHeight: "25vh",
+          minHeight: "20vh",
           bgcolor: theme.palette.background.dark,
           display: "flex",
           justifyContent: "center",
@@ -83,11 +83,12 @@ function Trade() {
             sx={{
               textAlign: "center",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
               alignItems: "center",
               width: "99%",
               flexDirection: "column",
-              gap: "20px",
+              gap: "10px",
+              padding: swapPrams.swapMode === "swap" ? "1rem" : "0",
             }}
           >
             <Box
@@ -103,6 +104,7 @@ function Trade() {
               <Typography
                 color={theme.palette.secondary.light}
                 sx={{ letterSpacing: "0.01px" }}
+                fontSize={"0.9rem"}
               >
                 You're Selling
               </Typography>
@@ -113,11 +115,13 @@ function Trade() {
                 alignItems={"center"}
               >
                 <Typography
-                  color={theme.palette.secondary.dark}
+                  color={theme.palette.secondary.main}
                   display={"flex"}
                   alignItems={"center"}
+                  fontSize={"0.8rem"}
                 >
-                  <Wallet /> 0.0000
+                  <Wallet fontSize="0.8rem" /> 0.0000{" "}
+                  {tokendata[swapPrams.SwapTokenToSellId].symbol}
                 </Typography>
 
                 <Button
@@ -173,6 +177,7 @@ function Trade() {
                   borderRadius: "10px",
                   minHeight: "40px",
                   border: "none",
+                  textTransform: "none",
                   "&:hover": {
                     backgroundColor: theme.palette.primary.dark,
                     borderColor: theme.palette.primary.main,
@@ -274,7 +279,7 @@ function Trade() {
         }
         sx={{
           width: "100%",
-          minHeight: "25vh",
+          minHeight: "20vh",
           bgcolor: theme.palette.background.light,
           display: "flex",
           justifyContent: "center",
@@ -282,6 +287,7 @@ function Trade() {
           color: theme.palette.primary.main,
           fontWeight: "bold",
           borderRadius: "10px",
+
           border:
             selected === "BuySide"
               ? `1px solid ${theme.palette.primary.dark}`
@@ -308,7 +314,8 @@ function Trade() {
               alignItems: "center",
               width: "99%",
               flexDirection: "column",
-              gap: "20px",
+              gap: "10px",
+              padding: swapPrams.swapMode === "swap" ? "1rem" : "0",
             }}
           >
             <Box
@@ -324,6 +331,7 @@ function Trade() {
               <Typography
                 color={theme.palette.secondary.light}
                 sx={{ letterSpacing: "0.01px" }}
+                fontSize={"0.9rem"}
               >
                 You're Buying
               </Typography>
@@ -337,8 +345,10 @@ function Trade() {
                   color={theme.palette.secondary.main}
                   display={"flex"}
                   alignItems={"center"}
+                  fontSize={"0.8rem"}
                 >
-                  <Wallet /> 0.0000
+                  <Wallet fontSize="0.8rem" /> 0.0000{" "}
+                  {tokendata[swapPrams.SwapTokenToBuyId].symbol}
                 </Typography>
               </Box>
             </Box>
@@ -361,6 +371,7 @@ function Trade() {
                   borderRadius: "10px",
                   minHeight: "40px",
                   border: "none",
+                  textTransform: "none",
                   "&:hover": {
                     backgroundColor: theme.palette.primary.dark,
                     borderColor: theme.palette.primary.main,
@@ -401,9 +412,6 @@ function Trade() {
                   "& .MuiInputBase-input": {
                     color: mode === "dark" ? "white" : "black",
                   },
-                  "& .MuiInputBase-input-disabled": {
-                    color: mode === "dark" ? "white" : "black",
-                  },
                 }}
                 color="background"
                 placeholder="0.00"
@@ -415,11 +423,13 @@ function Trade() {
                   }
                 }}
                 value={swapPrams.BuyAmount}
+                aria-readonly
               />
             </Box>
           </Box>
         </Box>
       </Box>
+
       {swapPrams.SellAmount ? (
         <Box
           display={"flex"}
@@ -461,6 +471,7 @@ function Trade() {
           },
           height: "4rem",
           borderRadius: "0.5rem",
+          textTransform: "none",
         }}
         disabled={swapPrams.SellAmount ? false : true}
       >

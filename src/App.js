@@ -1,18 +1,39 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import Nav from "./component/Nav.jsx";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ClickAwayListener,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material";
-import Reviews from "@mui/icons-material/Reviews.js";
+import { useMediaQuery } from "@mui/material";
 import SideBar from "./component/SideBar.jsx";
 import Spot from "./component/Spot.jsx";
-import { ReviewsRounded } from "@mui/icons-material";
+import {
+  GitHub,
+  Mail,
+  Reddit,
+  ReviewsRounded,
+  X,
+  YouTube,
+} from "@mui/icons-material";
+import { useState } from "react";
+import ContactMailRoundedIcon from "@mui/icons-material/ContactMailRounded.js";
+import { FaDiscord } from "react-icons/fa";
+import Contact from "./component/Contact.jsx";
+import HubSpotChat from "./component/HubSpotChat.jsx";
 
 function App() {
   const isMenuOpen = useSelector((state) => state.ModeSlice.isMenuOpen);
   const mode = useSelector((state) => state.ModeSlice.mode);
+  const [showSocial, setShowSocial] = useState(false);
+  const match = useMediaQuery("(max-width: 800px)");
   const theme = createTheme({
     palette: {
       primary: {
@@ -43,12 +64,16 @@ function App() {
       fontWeightRegular: 500,
       fontWeightMedium: 600,
     },
+    disabledButton: {
+      backgroundColor: "rgba(232, 249, 255, .9)",
+    },
   });
   return (
     <ThemeProvider theme={theme}>
       <Box position={"fixed"} zIndex={10} top={0}>
         {isMenuOpen && <SideBar />}
       </Box>
+
       <Box
         width="102vw"
         height="auto"
@@ -60,10 +85,13 @@ function App() {
         transition="0.5s"
       >
         <Nav />
+        <HubSpotChat />
         <Box marginTop={"15vh"}>
           <Routes>
             <Route path="/" element={<Spot />} />
             <Route path="/jupdex" element={<Spot />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/jupdex/contact" element={<Contact />} />
           </Routes>
         </Box>
       </Box>
@@ -97,10 +125,107 @@ function App() {
             sx={{
               display: "flex",
               alignItems: "center",
-              width: "15%",
+
               cursor: "pointer",
             }}
+            onClick={() => setShowSocial(!showSocial)}
           >
+            {showSocial ? (
+              <ClickAwayListener onClickAway={() => setShowSocial(false)}>
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{
+                    width: "8rem",
+                    height: "12rem",
+                    bgcolor: theme.palette.background.dark,
+                    borderRadius: "0.5rem",
+                    position: "absolute",
+                    bottom: "-11rem",
+                  }}
+                  gap={0.5}
+                >
+                  <Typography color={theme.palette.secondary.light}>
+                    Socials
+                  </Typography>
+                  <Divider
+                    sx={{
+                      bgcolor: theme.palette.secondary.light,
+                      height: "1px",
+                      width: "80%",
+                    }}
+                  ></Divider>
+                  <Box
+                    display={"flex"}
+                    flexDirection={"column"}
+                    color={theme.palette.secondary.light}
+                    gap={1}
+                    sx={{
+                      "& :hover": {
+                        color: theme.palette.primary.main,
+                      },
+                    }}
+                  >
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"flex-starts"}
+                      color={theme.palette.secondary.light}
+                      gap={1}
+                    >
+                      <X size={"2rem"} />
+                      <Typography fontSize={"0.75rem"}>X</Typography>
+                    </Box>
+                    <Link to={"/jupdex/contact"}>
+                      <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        justifyContent={"flex-starts"}
+                        color={theme.palette.secondary.light}
+                        gap={1}
+                      >
+                        <Mail />
+                        <Typography fontSize={"0.75rem"}>Contact</Typography>
+                      </Box>
+                    </Link>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"flex-starts"}
+                      color={theme.palette.secondary.light}
+                      gap={1}
+                    >
+                      <YouTube size={"2rem"} />
+                      <Typography fontSize={"0.75rem"}>YouTube</Typography>
+                    </Box>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"flex-starts"}
+                      color={theme.palette.secondary.light}
+                      gap={1}
+                    >
+                      <Reddit size={"2rem"} />
+                      <Typography fontSize={"0.75rem"}>Reddit</Typography>
+                    </Box>
+                    <Box
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"flex-starts"}
+                      color={theme.palette.secondary.light}
+                      gap={1}
+                    >
+                      <GitHub size={"2rem"} />
+                      <Typography fontSize={"0.75rem"}>Guid</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </ClickAwayListener>
+            ) : (
+              false
+            )}
             <IconButton>
               <ReviewsRounded
                 color="primary"

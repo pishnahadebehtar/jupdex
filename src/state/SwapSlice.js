@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const SwapSlice = createSlice({
   name: "SwapSlice",
   initialState: {
+    swapMode: "swap",
     SelectSwapTokenSide: "Sell",
     SelectSwapTokenOpen: "Closed",
     BuyAmount: 0,
@@ -30,6 +31,9 @@ const SwapSlice = createSlice({
           break;
         case "SelectSwapTokenSide":
           state.SelectSwapTokenSide = action.payload.Value;
+          break;
+        case "swapMode":
+          state.swapMode = action.payload.Value;
           break;
         default:
           console.log("Error on dispatch");

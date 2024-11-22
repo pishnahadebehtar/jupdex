@@ -1,32 +1,29 @@
 // TradingViewWidget.jsx
-import { Chat } from "@mui/icons-material";
 import React, { useEffect, useRef, memo } from "react";
 
-function TradingViewWidget() {
+function TradingViewWidget({ symbol }) {
   const container = useRef();
 
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      "https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js";
     script.type = "text/javascript";
     script.async = true;
     script.innerHTML = `
         {
-          "autosize": true,
-          "symbol": "INDEX:BTCUSD",
-          "interval": "D",
-          "timezone": "Etc/UTC",
-          "theme": "dark",
-          "style": "1",
-          "locale": "en",
-          "allow_symbol_change": true,
-           "hide_top_toolbar": true,
-             "hide_side_toolbar": false,
-             
-          "calendar": false,
-          "support_host": "https://www.tradingview.com"
-        }`;
+  "symbol": "${symbol}",
+  "width": "100%",
+  "height": "100%",
+  "locale": "en",
+  "dateRange": "1D",
+  "colorTheme": "dark",
+  "isTransparent": true,
+  "autosize": true,
+  "largeChartUrl": "",
+  "chartOnly": false,
+  "noTimeScale": true
+}`;
 
     container.current.appendChild(script);
   }, []);
@@ -41,7 +38,6 @@ function TradingViewWidget() {
           borderRadius: "2rem",
         }}
       ></div>
-    
     </div>
   );
 }
