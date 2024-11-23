@@ -530,7 +530,8 @@ function Trade() {
       ) : (
         false
       )}
-      {ShowMore && swapPrams.BuyAmount ? <MoreInfo /> : false}
+      <MoreInfo />
+      {ShowMore && swapPrams.BuyAmount ? true : false}
     </Box>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
-import HubSpotChat from "./HubSpotChat";
 
 const Contact = () => {
   useEffect(() => {
@@ -34,16 +33,6 @@ const Contact = () => {
         <title>Contact Us</title>
       </Helmet>
       <div id="hubspotForm"></div>
-      <Helmet>
-        <script
-          type="text/javascript"
-          id="hs-script-loader"
-          async
-          defer
-          src="//js-na1.hs-scripts.com/48247135.js"
-        ></script>
-      </Helmet>
-      <HubSpotChat />
     </div>
   );
 };
