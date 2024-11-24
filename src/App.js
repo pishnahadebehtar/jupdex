@@ -85,7 +85,7 @@ function App() {
         transition="0.5s"
       >
         <Nav />
-        <HubSpotChat />
+
         <Box marginTop={"15vh"}>
           <Routes>
             <Route path="/" element={<Spot />} />
@@ -143,7 +143,7 @@ function App() {
                     bgcolor: theme.palette.background.dark,
                     borderRadius: "0.5rem",
                     position: "absolute",
-                    bottom: "-11rem",
+                    marginTop: "-50vh",
                   }}
                   gap={0.5}
                 >

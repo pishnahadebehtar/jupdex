@@ -5,20 +5,10 @@ import { Tooltip, tooltipClasses } from "@mui/material";
 import { QuestionMark } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
+import tokendata from "../assets/tokenData.js";
 function VADetails() {
   const theme = useTheme();
-  const BootstrapTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: "transparent",
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.common.black,
-    },
-  }));
   const SwapPrams = useSelector((state) => state.SwapSlice);
-  const Settings = useSelector((state) => state.SettingSlice);
   return (
     <Box>
       <Box
@@ -27,7 +17,30 @@ function VADetails() {
         alignItems={"center"}
         color={theme.palette.secondary.main}
       >
-        <Typography fontSize={"0.75rem"}>Minimum Received</Typography>
+        <Typography fontSize={"0.75rem"}>Max budget</Typography>
+        <Typography fontSize={"0.75rem"}>{SwapPrams.SellAmount}</Typography>
+      </Box>
+
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        color={theme.palette.secondary.main}
+      >
+        <Typography fontSize={"0.75rem"}>To Buy</Typography>
+        <Typography fontSize={"0.75rem"}>
+          {tokendata[SwapPrams.SwapTokenToBuyId].symbol}
+        </Typography>
+      </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        color={theme.palette.secondary.main}
+      >
+        <Typography fontSize={"0.75rem"}>
+          To Increase portfolio value by
+        </Typography>
         <Typography fontSize={"0.75rem"}>{SwapPrams.BuyAmount}</Typography>
       </Box>
       <Box
@@ -36,30 +49,9 @@ function VADetails() {
         alignItems={"center"}
         color={theme.palette.secondary.main}
       >
+        <Typography fontSize={"0.75rem"}>Every</Typography>
         <Typography fontSize={"0.75rem"}>
-          Max Transaction Fee [
-          <BootstrapTooltip
-            title="This is for Solana transaction fee and Priority fee"
-            placement="top"
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -9],
-                    },
-                  },
-                ],
-              },
-            }}
-          >
-            <QuestionMark fontSize="xxs" />
-          </BootstrapTooltip>
-          ]
-        </Typography>
-        <Typography fontSize={"0.75rem"}>
-          {(SwapPrams.SellAmount * Settings.MaxSlippage) / 100}
+          {SwapPrams.VAInterval} {SwapPrams.VAIntervalUnit}
         </Typography>
       </Box>
       <Box
@@ -68,47 +60,8 @@ function VADetails() {
         alignItems={"center"}
         color={theme.palette.secondary.main}
       >
-        <Typography fontSize={"0.75rem"}>
-          Deposit[
-          <BootstrapTooltip
-            title="You need to have the token accounts in order to execute the trade."
-            placement="top"
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -9],
-                    },
-                  },
-                ],
-              },
-            }}
-          >
-            <QuestionMark fontSize="xxs" />
-          </BootstrapTooltip>
-          ]
-        </Typography>
-        <Typography fontSize={"0.75rem"}>{SwapPrams.SellAmount}</Typography>
-      </Box>
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        color={theme.palette.secondary.main}
-      >
-        <Typography fontSize={"0.75rem"}>Price Impact</Typography>
-        <Typography fontSize={"0.75rem"}>{"<0.01"}</Typography>
-      </Box>
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        color={theme.palette.secondary.main}
-      >
-        <Typography fontSize={"0.75rem"}>Price Difference</Typography>
-        <Typography fontSize={"0.75rem"}>{"0.002"}</Typography>
+        <Typography fontSize={"0.75rem"}>Platform Fee</Typography>
+        <Typography fontSize={"0.75rem"}>0.10%</Typography>
       </Box>
     </Box>
   );

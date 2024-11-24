@@ -72,16 +72,18 @@ function Spot() {
       }
     }
     PriceApi();
-  }, [SwapPrams, dispatch]);
+  }, [SwapPrams.SellAmount, dispatch]);
   useEffect(() => {
-    console.log(!PriceData.error);
+    console.log("test");
     dispatch(
       updateSwap({
         Type: "BuyAmount",
-        Value: PriceData.rate ? PriceData.rate * SwapPrams.SellAmount : 0,
+        Value: PriceData.rate
+          ? PriceData.rate * SwapPrams.SellAmount
+          : SwapPrams.BuyAmount,
       })
     );
-  }, [SwapPrams, PriceData]);
+  }, [PriceData]);
   //body of component starts here
   return (
     <Box>
@@ -714,7 +716,11 @@ function Spot() {
             </IconButton>
           </Box>
           <Trade />
-          <MiniChart symbol={"CRYPTO:SOLUSD"} />
+          {SwapPrams.swapMode === "swap" ? (
+            <MiniChart symbol={"CRYPTO:SOLUSD"} />
+          ) : (
+            false
+          )}
         </Box>
       </Box>
     </Box>

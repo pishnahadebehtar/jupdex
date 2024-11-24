@@ -1,9 +1,16 @@
-import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useTheme } from "@mui/material";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useSelector, useDispatch } from "react-redux";
-import { Wallet } from "@mui/icons-material";
+import { ArrowDropDown, Wallet } from "@mui/icons-material";
 import RouteIcon from "@mui/icons-material/Route";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -13,7 +20,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
 import { updateSwap } from "../state/SwapSlice.js";
 import tokendata from "../assets/tokenData.js";
-
+import { alpha, styled } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 function Trade() {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -22,7 +39,9 @@ function Trade() {
   const [progress, setProgress] = React.useState(0);
   const [selected, setSelected] = useState("NotSelected");
   const swapPrams = useSelector((state) => state.SwapSlice);
-
+  const matches = useMediaQuery("(min-width:800px)");
+  const [DCAEveryAnchor, SetDCAEveryAnchor] = useState(null);
+  const [DCAOverAnchor, SetDCAOverAnchor] = useState(null);
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
@@ -34,7 +53,14 @@ function Trade() {
       clearInterval(timer);
     };
   }, []);
-
+  const DarkerDisabledTextField = styled("TextField")({
+    root: {
+      marginRight: 8,
+      "& .MuiInputBase-root.Mui-disabled": {
+        color: "white", // (default alpha is 0.38)
+      },
+    },
+  });
   return (
     <Box
       sx={{
@@ -207,7 +233,6 @@ function Trade() {
                 {tokendata[swapPrams.SwapTokenToSellId].name}
               </Button>
               <TextField
-                id="BuyingAmount"
                 variant="standard"
                 sx={{
                   minWidth: "15%",
@@ -233,7 +258,7 @@ function Trade() {
       </Box>
       <Divider
         sx={{
-          bgcolor: theme.palette.background.dark,
+          bgcolor: theme.palette.background.light,
           height: "1px",
           width: "100%",
           display: "flex",
@@ -404,7 +429,6 @@ function Trade() {
                 {tokendata[swapPrams.SwapTokenToBuyId].name}
               </Button>
               <TextField
-                id="BuyingAmount"
                 variant="standard"
                 sx={{
                   minWidth: "15%",
@@ -412,6 +436,377 @@ function Trade() {
                   "& .MuiInputBase-input": {
                     color: mode === "dark" ? "white" : "black",
                   },
+                }}
+                placeholder="0.00"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+                  if (value.match(regex) || value === "") {
+                    dispatch(updateSwap({ Type: "BuyAmount", Value: value }));
+                  }
+                }}
+                value={swapPrams.BuyAmount}
+              />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+      {swapPrams.swapMode === "dca" ? (
+        <Box>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Box
+              onClick={(e) => {
+                DCAEveryAnchor === null
+                  ? SetDCAEveryAnchor(e.currentTarget)
+                  : SetDCAEveryAnchor(null);
+              }}
+              width={"45%"}
+              height={"45%"}
+              bgcolor={theme.palette.background.dark}
+              display={"flex"}
+              justifyContent={"center"}
+              alignContent={"center"}
+              flexDirection={"column"}
+              padding={"0.5rem"}
+              borderRadius={"0.5rem"}
+            >
+              <Typography
+                color={theme.palette.secondary.main}
+                fontSize={"0.7rem"}
+              >
+                Every
+              </Typography>
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                padding={"0.5rem"}
+              >
+                <TextField
+                  variant="standard"
+                  sx={{
+                    minWidth: "15%",
+                    maxWidth: "25%",
+                    "& .MuiInputBase-input": {
+                      color: mode === "dark" ? "white" : "black",
+                    },
+                  }}
+                  placeholder="0.00"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+                    if (value.match(regex) || value === "") {
+                      dispatch(
+                        updateSwap({ Type: "DCAOrderInterval", Value: value })
+                      );
+                    }
+                  }}
+                  value={swapPrams.DCAOrderInterval}
+                />
+                <Typography
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  color={theme.palette.secondary.light}
+                >
+                  {swapPrams.DCAOrderIntervalUnit}
+                  <ArrowDropDown />
+                </Typography>
+                <BasePopup
+                  open={Boolean(DCAEveryAnchor)}
+                  anchor={DCAEveryAnchor}
+                >
+                  <Box
+                    width={"100%"}
+                    bgcolor={theme.palette.background.dark}
+                    padding={"1rem"}
+                    color={"white"}
+                  >
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Minute",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Minute" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Hour",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Hour" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Day",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Day" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Week",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Week" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Month",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Month" />
+                    </ListItemButton>
+                  </Box>
+                </BasePopup>
+              </Box>
+            </Box>
+
+            <Box
+              onClick={(e) => {
+                DCAEveryAnchor === null
+                  ? SetDCAEveryAnchor(e.currentTarget)
+                  : SetDCAEveryAnchor(null);
+              }}
+              width={"45%"}
+              height={"45%"}
+              bgcolor={theme.palette.background.dark}
+              display={"flex"}
+              justifyContent={"center"}
+              alignContent={"center"}
+              flexDirection={"column"}
+              padding={"0.5rem"}
+              borderRadius={"0.5rem"}
+            >
+              <Typography
+                color={theme.palette.secondary.main}
+                fontSize={"0.7rem"}
+              >
+                Every
+              </Typography>
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                padding={"0.5rem"}
+              >
+                <TextField
+                  variant="standard"
+                  sx={{
+                    minWidth: "15%",
+                    maxWidth: "25%",
+                    "& .MuiInputBase-input": {
+                      color: mode === "dark" ? "white" : "black",
+                    },
+                  }}
+                  placeholder="0.00"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+                    if (value.match(regex) || value === "") {
+                      dispatch(
+                        updateSwap({ Type: "DCAOrderInterval", Value: value })
+                      );
+                    }
+                  }}
+                  value={swapPrams.DCAOrderInterval}
+                />
+                <Typography
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  color={theme.palette.secondary.light}
+                >
+                  {swapPrams.DCAOrderIntervalUnit}
+                  <ArrowDropDown />
+                </Typography>
+                <BasePopup
+                  open={Boolean(DCAEveryAnchor)}
+                  anchor={DCAEveryAnchor}
+                >
+                  <Box
+                    width={"100%"}
+                    bgcolor={theme.palette.background.dark}
+                    padding={"1rem"}
+                    color={"white"}
+                  >
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Minute",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Minute" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Hour",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Hour" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Day",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Day" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Week",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Week" />
+                    </ListItemButton>
+                    <ListItemButton
+                      component="a"
+                      href="#simple-list"
+                      onClick={() =>
+                        dispatch(
+                          updateSwap({
+                            Type: "DCAOrderIntervalUnit",
+                            Value: "Month",
+                          })
+                        )
+                      }
+                    >
+                      <ListItemText primary="Month" />
+                    </ListItemButton>
+                  </Box>
+                </BasePopup>
+              </Box>
+            </Box>
+          </Box>
+          <Box></Box>
+        </Box>
+      ) : (
+        false
+      )}
+      {swapPrams.swapMode === "limit" ? (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: matches ? "row" : "column",
+          }}
+          gap={1}
+        >
+          <Box
+            sx={{
+              width: matches ? "60%" : "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: "column",
+              bgcolor: theme.palette.background.dark,
+              borderRadius: "0.5rem",
+              padding: "0.5rem",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <Typography
+                color={theme.palette.secondary.main}
+                fontSize={"0.7rem"}
+              >
+                Buy {tokendata[swapPrams.SwapTokenToBuyId].symbol} at Rate
+              </Typography>
+              <Button sx={{ fontSize: "0.7rem" }}>Use Market</Button>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "90%",
+              }}
+            >
+              <TextField
+                id="BuyingAmount"
+                variant="standard"
+                sx={{
+                  minWidth: "15%",
+                  maxWidth: "50%",
+                  "& .MuiInputBase-input": {
+                    color: mode === "dark" ? "white" : "black",
+                  },
+                  fontSize: "0.7rem",
                 }}
                 color="background"
                 placeholder="0.00"
@@ -423,13 +818,90 @@ function Trade() {
                   }
                 }}
                 value={swapPrams.BuyAmount}
-                aria-readonly
               />
+              <Typography
+                fontSize={"0.8rem"}
+                color={theme.palette.secondary.main}
+              >
+                {tokendata[swapPrams.SwapTokenToSellId].symbol}
+              </Typography>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              bgcolor: theme.palette.background.dark,
+              padding: "0.5rem",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
+              borderRadius: "0.5rem",
+              width: matches ? "auto" : "100%",
+            }}
+          >
+            <Box sx={{ minWidth: 120 }} width={"100%"} paddingTop={1}>
+              <FormControl fullWidth>
+                <InputLabel
+                  color="secondary"
+                  sx={{
+                    color: theme.palette.secondary.light, // Default color
+                    "&.Mui-focused": {
+                      color: theme.palette.secondary.light, // Color when focused
+                    },
+                  }}
+                >
+                  Expiry
+                </InputLabel>
+                <Select
+                  value={swapPrams.LimitExpriy}
+                  label="Expriy"
+                  onChange={(e) => {
+                    dispatch(
+                      updateSwap({ Type: "LimitExpriy", Value: e.target.value })
+                    );
+                  }}
+                  sx={{
+                    fontSize: "0.8rem",
+                    "& .MuiSelect-select": {
+                      color: theme.palette.secondary.light, // Change text color
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: theme.palette.secondary.light, // Change border color
+                      border: "none", // Remove border
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      border: "none", // Remove border
+                      borderColor: theme.palette.secondary.light, // Change border color on hover
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      border: "none", // Remove border
+                      borderColor: theme.palette.secondary.light, // Change border color when focused
+                    },
+                  }}
+                  MenuProps={{
+                    PaperProps: {
+                      sx: {
+                        bgcolor: alpha(theme.palette.background.light, 0.9),
+                        color: theme.palette.secondary.main,
+                      },
+                    },
+                  }}
+                >
+                  <MenuItem value={"10 Minutes"}>10 Minutes</MenuItem>
+                  <MenuItem value={"1 Hour"}>1 Hour</MenuItem>
+                  <MenuItem value={"1 Day"}>1 Day</MenuItem>
+                  <MenuItem value={"3 Day"}>3 Day</MenuItem>
+                  <MenuItem value={"7 Day"}>7 Day</MenuItem>
+                  <MenuItem value={"30 Day"}>30 Day</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
           </Box>
         </Box>
-      </Box>
-
+      ) : (
+        false
+      )}
       {swapPrams.SellAmount ? (
         <Box
           display={"flex"}
@@ -440,13 +912,14 @@ function Trade() {
           <Button
             startIcon={<RouteIcon />}
             variant="outlined"
-            sx={{ borderRadius: "3rem" }}
+            sx={{ borderRadius: "3rem", fontSize: "0.7rem" }}
           >
             2 Markets
           </Button>
           <Typography
             color={theme.palette.secondary.main}
             sx={{
+              fontSize: "0.8rem",
               "&:hover": {
                 color: theme.palette.primary.main,
                 cursor: "pointer",
@@ -473,24 +946,33 @@ function Trade() {
           borderRadius: "0.5rem",
           textTransform: "none",
         }}
-        disabled={swapPrams.SellAmount ? false : true}
+        disabled={swapPrams.SellAmount && swapPrams.BuyAmount ? false : true}
       >
         {swapPrams.SellAmount && swapPrams.BuyAmount
-          ? "Swap"
-          : "Entre An Amount"}
+          ? swapPrams.swapMode === "swap"
+            ? "Swap"
+            : swapPrams.swapMode === "limit"
+            ? "Place Limit Order"
+            : swapPrams.swapMode === "dca"
+            ? "Start DCA"
+            : "Start VA"
+          : swapPrams.SellAmount
+          ? "Waiting for Fetching The Price ..."
+          : "Entre Amount"}
       </Button>
-      {swapPrams.BuyAmount !== 0 ? (
+      {swapPrams.BuyAmount === 0 ? (
         <Box
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-between"}
-          color={theme.palette.secondary.dark}
+          color={theme.palette.secondary.main}
         >
           <Box
             display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
             sx={{
+              fontSize: "0.8rem",
               "&:hover": {
                 color: theme.palette.primary.main,
                 cursor: "pointer",
@@ -500,7 +982,7 @@ function Trade() {
             1 {tokendata[swapPrams.SwapTokenToSellId].symbol} ={" "}
             {swapPrams.BuyAmount / swapPrams.SellAmount}{" "}
             {tokendata[swapPrams.SwapTokenToBuyId].symbol}
-            <SwapHorizIcon />
+            <SwapHorizIcon fontSize="small" />
           </Box>
 
           <Box
@@ -511,6 +993,7 @@ function Trade() {
               SetShowMore(!ShowMore);
             }}
             sx={{
+              fontSize: "0.8rem",
               "&:hover": {
                 color: theme.palette.primary.main,
                 cursor: "pointer",
@@ -518,10 +1001,16 @@ function Trade() {
             }}
             gap={2}
           >
-            {ShowMore ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
-            <Typography>{ShowMore ? "Show" : "Hide"} More Info</Typography>
+            {ShowMore ? (
+              <KeyboardArrowDownIcon fontSize="0.8rem" />
+            ) : (
+              <KeyboardArrowUpIcon fontSize="0.8rem" />
+            )}
+            <Typography fontSize={"0.8rem"}>
+              {ShowMore ? "Show" : "Hide"} More Info
+            </Typography>
             <CircularProgress
-              size="1rem"
+              size="0.8rem"
               variant="determinate"
               value={progress}
             />
