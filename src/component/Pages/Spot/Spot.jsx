@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SettingsIcon from "@mui/icons-material/Settings";
-import Trade from "./Trade.jsx";
+import Trade from "./TradeComponents/Trade.jsx";
 import SwapSetting from "./SwapComponents/SwapSetting.jsx";
 import { updateSettingStates } from "../../../state/SettingSlice.js";
 import { useSelector, useDispatch } from "react-redux";

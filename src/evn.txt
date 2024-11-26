@@ -154,3 +154,10 @@ Here's how you can set up a GitHub Actions workflow to automatically deploy your
 
 By setting up this workflow, your React app will be automatically deployed to GitHub Pages every time you push changes to your repository. This ensures that your site is always up-to-date without manual intervention. If you have any questions or need further customization, feel free to ask!
 
+
+
+
+
+
+
+      

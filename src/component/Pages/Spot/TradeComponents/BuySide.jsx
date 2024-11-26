@@ -1,8 +1,16 @@
 import { Box, Typography, Button, TextField } from "@mui/material";
-import React from "react";
-import tokenListData from "../../../assets/tokenData";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-function SellSide() {
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { updateSwap } from "../../../../state/SwapSlice.js";
+import { useTheme } from "@mui/material";
+import tokendata from "../../../../assets/tokenData.js";
+import { Wallet } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
+function BuySide() {
+  const [selected, setSelected] = useState("NotSelected");
+  const swapPrams = useSelector((state) => state.SwapSlice);
+  const theme = useTheme();
   const selectSideFocus = (side) => {
     side === "SellSide"
       ? selected === "NotSelected" || selected === "BuySide"
@@ -13,7 +21,17 @@ function SellSide() {
       : setSelected("NotSelected");
   };
   const dispatch = useDispatch();
-  const theme = useTheme();
+  const matches = useMediaQuery("(min-width:800px)");
+  const SetAmount = (e, ref) => {
+    const value = e.target.value;
+    const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+    if (value.match(regex) || value === "") {
+      dispatch(updateSwap({ Type: ref, Value: value }));
+    }
+  };
+  const BuyTokenIcon = require(`../../../../assets/${
+    tokendata[swapPrams.SwapTokenToBuyId].name
+  }.png`);
   return (
     <Box
       onClick={() => selectSideFocus("SellSide")}
@@ -54,7 +72,7 @@ function SellSide() {
             width: "99%",
             flexDirection: "column",
             gap: "10px",
-            padding: swapPrams.swapMode === "swap" ? "1rem" : "0",
+            padding: matches ? "1rem" : "0",
           }}
         >
           <Box
@@ -72,7 +90,7 @@ function SellSide() {
               sx={{ letterSpacing: "0.01px" }}
               fontSize={"0.9rem"}
             >
-              You're Selling
+              You're Buying
             </Typography>
             <Box
               display={"flex"}
@@ -87,41 +105,8 @@ function SellSide() {
                 fontSize={"0.8rem"}
               >
                 <Wallet fontSize="0.8rem" /> 0.0000{" "}
-                {tokenListData[swapPrams.SwapTokenToSellId].symbol}
+                {tokendata[swapPrams.SwapTokenToBuyId].symbol}
               </Typography>
-
-              <Button
-                size="small"
-                sx={{
-                  fontSize: "0.6rem",
-                  color: theme.palette.secondary.light,
-                  bgcolor: theme.palette.background.default,
-                  borderRadius: "0.4rem",
-                  minWidth: "10px",
-                  "&:hover": {
-                    color: theme.palette.primary.main,
-                    boxShadow: `0 0 0.1rem ${theme.palette.primary.dark}`,
-                  },
-                }}
-              >
-                Half
-              </Button>
-              <Button
-                size="small"
-                sx={{
-                  fontSize: "0.6rem",
-                  color: theme.palette.secondary.light,
-                  bgcolor: theme.palette.background.default,
-                  borderRadius: "0.4rem",
-                  minWidth: "10px",
-                  "&:hover": {
-                    color: theme.palette.primary.main,
-                    boxShadow: `0 0 0.1rem ${theme.palette.primary.dark}`,
-                  },
-                }}
-              >
-                Max
-              </Button>
             </Box>
           </Box>
           <Box
@@ -152,10 +137,10 @@ function SellSide() {
               }}
               startIcon={
                 <img
-                  src={SellTokenIcon}
+                  src={BuyTokenIcon}
                   width="20px"
                   height={"20px"}
-                  alt={tokendata[swapPrams.SwapTokenToSellId].name}
+                  alt={tokendata[swapPrams.SwapTokenToBuyId].name}
                 />
               }
               endIcon={<KeyboardArrowDownIcon />}
@@ -164,11 +149,11 @@ function SellSide() {
                   updateSwap({ Type: "SelectSwapTokenOpen", Value: "Open" })
                 );
                 dispatch(
-                  updateSwap({ Type: "SelectSwapTokenSide", Value: "Sell" })
+                  updateSwap({ Type: "SelectSwapTokenSide", Value: "Buy" })
                 );
               }}
             >
-              {tokendata[swapPrams.SwapTokenToSellId].name}
+              {tokendata[swapPrams.SwapTokenToBuyId].name}
             </Button>
             <TextField
               variant="standard"
@@ -176,13 +161,13 @@ function SellSide() {
                 minWidth: "15%",
                 maxWidth: "25%",
                 "& .MuiInputBase-input": {
-                  color: mode === "dark" ? "white" : "black",
+                  color: "white",
                 },
               }}
               color="background"
               placeholder="0.00"
-              onChange={(e) => SetAmount(e, "SellAmount")}
-              value={swapPrams.SellAmount}
+              onChange={(e) => SetAmount(e, "BuyAmount")}
+              value={swapPrams.BuyAmount}
             />
           </Box>
         </Box>
@@ -191,4 +176,4 @@ function SellSide() {
   );
 }
 
-export default SellSide;
+export default BuySide;

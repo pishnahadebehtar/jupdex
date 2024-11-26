@@ -17,9 +17,10 @@ const SwapSlice = createSlice({
     DCAMinPriceRange: null,
     DCAMaxPriceRange: null,
     LimitExpriy: "never",
-    VAInterval: 1,
-    VAIntervalUnit: "minute",
+    VAOrderInterval: 1,
+    VAOrderIntervalUnit: "minute",
     LimitAmount: 0,
+    VAStartDate: null,
   },
   reducers: {
     updateSwap: (state, action) => {
@@ -60,10 +61,10 @@ const SwapSlice = createSlice({
         case "LimitExpriy":
           state.LimitExpriy = action.payload.Value;
           break;
-        case "VAInterval":
+        case "VAOrderInterval":
           state.VAInterval = action.payload.Value;
           break;
-        case "VAIntervalUnit":
+        case "VAOrderIntervalUnit":
           state.VAIntervalUnit = action.payload.Value;
           break;
         case "DCAMinPriceRange":
@@ -74,6 +75,9 @@ const SwapSlice = createSlice({
           break;
         case "LimitAmoount":
           state.LimitAmount = action.payload.Value;
+          break;
+        case "VAStartDate":
+          state.VAStartDate = action.payload.Value;
           break;
         default:
           console.log("Error on dispatch");
