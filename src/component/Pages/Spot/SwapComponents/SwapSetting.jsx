@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, CardHeader } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { updateSettingStates } from "../state/SettingSlice";
+import { updateSettingStates } from "../../../../state/SettingSlice.js";
 import React from "react";
 import { grey } from "@mui/material/colors";
 import { useMediaQuery } from "@mui/material";

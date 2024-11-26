@@ -3,17 +3,15 @@ import {
   Box,
   Typography,
   Button,
-  ButtonGroup,
   Divider,
   TextField,
   Switch,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { updateSettingStates } from "../state/SettingSlice";
+import { updateSettingStates } from "../../../../state/SettingSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "@emotion/react";
 import Accordion from "@mui/material/Accordion";
-
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";

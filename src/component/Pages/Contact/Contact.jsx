@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
-import HubSpotMeetings from "./HubSpotMeeting";
+import HubSpotMeetings from "./HubSpot/HubSpotMeeting.jsx";
 import { Box } from "@mui/material";
 
 const Contact = () => {
@@ -30,7 +30,7 @@ const Contact = () => {
   }, []);
 
   return (
-    <Box  >
+    <Box>
       <Helmet>
         <title>Contact Us</title>
       </Helmet>

@@ -1,11 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material";
-import { Tooltip, tooltipClasses } from "@mui/material";
-import { QuestionMark } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
+
 import { useSelector } from "react-redux";
-import tokendata from "../assets/tokenData.js";
+import tokendata from "../../../../assets/tokenData.js";
 function VADetails() {
   const theme = useTheme();
   const SwapPrams = useSelector((state) => state.SwapSlice);

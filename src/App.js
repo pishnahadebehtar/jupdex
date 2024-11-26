@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import SideBar from "./component/SideBar.jsx";
-import Spot from "./component/Spot.jsx";
+import Spot from "./component/Pages/Spot/Spot.jsx";
 import {
   GitHub,
   Mail,
@@ -24,10 +24,8 @@ import {
   YouTube,
 } from "@mui/icons-material";
 import { useState } from "react";
-import ContactMailRoundedIcon from "@mui/icons-material/ContactMailRounded.js";
-import { FaDiscord } from "react-icons/fa";
-import Contact from "./component/Contact.jsx";
-import HubSpotChat from "./component/HubSpotChat.jsx";
+
+import Contact from "./component/Pages/Contact/Contact.jsx";
 
 function App() {
   const isMenuOpen = useSelector((state) => state.ModeSlice.isMenuOpen);

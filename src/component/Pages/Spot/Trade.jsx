@@ -15,22 +15,19 @@ import RouteIcon from "@mui/icons-material/Route";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import MoreInfo from "./MoreInfo.jsx";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
-import { updateSwap } from "../state/SwapSlice.js";
-import tokendata from "../assets/tokenData.js";
 import { alpha, styled } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import MoreInfo from "./MoreInfo.jsx";
+import { updateSwap } from "../../../state/SwapSlice.js";
+import tokendata from "../../../assets/tokenData.js";
 function Trade() {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -41,7 +38,7 @@ function Trade() {
   const swapPrams = useSelector((state) => state.SwapSlice);
   const matches = useMediaQuery("(min-width:800px)");
   const [DCAEveryAnchor, SetDCAEveryAnchor] = useState(null);
-  const [DCAOverAnchor, SetDCAOverAnchor] = useState(null);
+
   React.useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
@@ -53,14 +50,36 @@ function Trade() {
       clearInterval(timer);
     };
   }, []);
-  const DarkerDisabledTextField = styled("TextField")({
-    root: {
-      marginRight: 8,
-      "& .MuiInputBase-root.Mui-disabled": {
-        color: "white", // (default alpha is 0.38)
-      },
-    },
-  });
+
+  const selectSideFocus = (side) => {
+    side === "SellSide"
+      ? selected === "NotSelected" || selected === "BuySide"
+        ? setSelected("SellSide")
+        : setSelected("NotSelected")
+      : selected === "NotSelected" || selected === "SellSide"
+      ? setSelected("BuySide")
+      : setSelected("NotSelected");
+  };
+
+  const SetAmount = (e, ref) => {
+    const value = e.target.value;
+    const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
+    if (value.match(regex) || value === "") {
+      dispatch(updateSwap({ Type: ref, Value: value }));
+    }
+  };
+
+  const SellTokenIcon = require(`../../../assets/${
+    tokendata[swapPrams.SwapTokenToSellId].name
+  }.png`);
+  const BuyTokenIcon = require(`../../../assets/${
+    tokendata[swapPrams.SwapTokenToBuyId].name
+  }.png`);
+  const DCAEveryPopup = (e) => {
+    DCAEveryAnchor === null
+      ? SetDCAEveryAnchor(e.currentTarget)
+      : SetDCAEveryAnchor(null);
+  };
   return (
     <Box
       sx={{
@@ -68,15 +87,11 @@ function Trade() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        gap: "5vh",
       }}
+      gap={1}
     >
       <Box
-        onClick={() =>
-          selected === "NotSelected" || selected === "BuySide"
-            ? setSelected("SellSide")
-            : setSelected("NotSelected")
-        }
+        onClick={() => selectSideFocus("SellSide")}
         sx={{
           width: "100%",
           minHeight: "20vh",
@@ -212,9 +227,7 @@ function Trade() {
                 }}
                 startIcon={
                   <img
-                    src={require(`../assets/${
-                      tokendata[swapPrams.SwapTokenToSellId].name
-                    }.png`)}
+                    src={SellTokenIcon}
                     width="20px"
                     height={"20px"}
                     alt={tokendata[swapPrams.SwapTokenToSellId].name}
@@ -243,13 +256,7 @@ function Trade() {
                 }}
                 color="background"
                 placeholder="0.00"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
-                  if (value.match(regex) || value === "") {
-                    dispatch(updateSwap({ Type: "SellAmount", Value: value }));
-                  }
-                }}
+                onChange={(e) => SetAmount(e, "SellAmount")}
                 value={swapPrams.SellAmount}
               />
             </Box>
@@ -264,8 +271,8 @@ function Trade() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "0.1rem",
-          marginBottom: "0.1rem",
+          marginTop: "1rem",
+          marginBottom: "1rem",
         }}
       >
         <IconButton
@@ -283,13 +290,17 @@ function Trade() {
             },
           }}
           onClick={() => {
-            let tempSellSideId = swapPrams.SwapTokenToSellId;
-            let tempBuySideId = swapPrams.SwapTokenToBuyId;
             dispatch(
-              updateSwap({ Type: "SwapTokenToSellId", Value: tempBuySideId })
+              updateSwap({
+                Type: "SwapTokenToSellId",
+                Value: swapPrams.SwapTokenToSellId,
+              })
             );
             dispatch(
-              updateSwap({ Type: "SwapTokenToBuyId", Value: tempSellSideId })
+              updateSwap({
+                Type: "SwapTokenToBuyId",
+                Value: swapPrams.SwapTokenToBuyId,
+              })
             );
           }}
         >
@@ -297,15 +308,11 @@ function Trade() {
         </IconButton>
       </Divider>
       <Box
-        onClick={() =>
-          selected === "NotSelected" || selected === "SellSide"
-            ? setSelected("BuySide")
-            : setSelected("NotSelected")
-        }
+        onClick={() => selectSideFocus("BuySide")}
         sx={{
           width: "100%",
           minHeight: "20vh",
-          bgcolor: theme.palette.background.light,
+          bgcolor: theme.palette.background.dark,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -319,7 +326,7 @@ function Trade() {
               : "none",
           boxShadow:
             selected === "BuySide"
-              ? `0 0 0.5rem ${theme.palette.primary.dark}`
+              ? `0 0 1rem ${theme.palette.primary.dark}`
               : "none",
         }}
       >
@@ -405,9 +412,7 @@ function Trade() {
                 }}
                 startIcon={
                   <img
-                    src={require(`../assets/${
-                      tokendata[swapPrams.SwapTokenToBuyId].name
-                    }.png`)}
+                    src={BuyTokenIcon}
                     width="20px"
                     height={"20px"}
                     alt={tokendata[swapPrams.SwapTokenToBuyId].name}
@@ -419,10 +424,7 @@ function Trade() {
                     updateSwap({ Type: "SelectSwapTokenOpen", Value: "Open" })
                   );
                   dispatch(
-                    updateSwap({
-                      Type: "SelectSwapTokenSide",
-                      Value: "Buy",
-                    })
+                    updateSwap({ Type: "SelectSwapTokenSide", Value: "Buy" })
                   );
                 }}
               >
@@ -438,13 +440,7 @@ function Trade() {
                   },
                 }}
                 placeholder="0.00"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
-                  if (value.match(regex) || value === "") {
-                    dispatch(updateSwap({ Type: "BuyAmount", Value: value }));
-                  }
-                }}
+                onChange={(e) => SetAmount(e, "BuyAmount")}
                 value={swapPrams.BuyAmount}
               />
             </Box>
@@ -452,27 +448,23 @@ function Trade() {
         </Box>
       </Box>
       {swapPrams.swapMode === "dca" ? (
-        <Box>
+        <Box display={"flex"} gap={1} flexDirection={"column"}>
           <Box
+            gap={1}
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
           >
             <Box
-              onClick={(e) => {
-                DCAEveryAnchor === null
-                  ? SetDCAEveryAnchor(e.currentTarget)
-                  : SetDCAEveryAnchor(null);
-              }}
-              width={"45%"}
-              height={"45%"}
+              onClick={(e) => DCAEveryPopup(e)}
               bgcolor={theme.palette.background.dark}
               display={"flex"}
               justifyContent={"center"}
               alignContent={"center"}
               flexDirection={"column"}
-              padding={"0.5rem"}
               borderRadius={"0.5rem"}
+              height={"75px"}
+              padding={"1rem"}
             >
               <Typography
                 color={theme.palette.secondary.main}
@@ -512,6 +504,7 @@ function Trade() {
                   justifyContent={"center"}
                   alignItems={"center"}
                   color={theme.palette.secondary.light}
+                  fontSize={"1rem"}
                 >
                   {swapPrams.DCAOrderIntervalUnit}
                   <ArrowDropDown />
@@ -533,12 +526,12 @@ function Trade() {
                         dispatch(
                           updateSwap({
                             Type: "DCAOrderIntervalUnit",
-                            Value: "Minute",
+                            Value: "minute",
                           })
                         )
                       }
                     >
-                      <ListItemText primary="Minute" />
+                      <ListItemText primary="minute" />
                     </ListItemButton>
                     <ListItemButton
                       component="a"
@@ -547,12 +540,12 @@ function Trade() {
                         dispatch(
                           updateSwap({
                             Type: "DCAOrderIntervalUnit",
-                            Value: "Hour",
+                            Value: "hour",
                           })
                         )
                       }
                     >
-                      <ListItemText primary="Hour" />
+                      <ListItemText primary="hour" />
                     </ListItemButton>
                     <ListItemButton
                       component="a"
@@ -561,12 +554,12 @@ function Trade() {
                         dispatch(
                           updateSwap({
                             Type: "DCAOrderIntervalUnit",
-                            Value: "Day",
+                            Value: "day",
                           })
                         )
                       }
                     >
-                      <ListItemText primary="Day" />
+                      <ListItemText primary="day" />
                     </ListItemButton>
                     <ListItemButton
                       component="a"
@@ -575,12 +568,12 @@ function Trade() {
                         dispatch(
                           updateSwap({
                             Type: "DCAOrderIntervalUnit",
-                            Value: "Week",
+                            Value: "week",
                           })
                         )
                       }
                     >
-                      <ListItemText primary="Week" />
+                      <ListItemText primary="week" />
                     </ListItemButton>
                     <ListItemButton
                       component="a"
@@ -589,12 +582,12 @@ function Trade() {
                         dispatch(
                           updateSwap({
                             Type: "DCAOrderIntervalUnit",
-                            Value: "Month",
+                            Value: "month",
                           })
                         )
                       }
                     >
-                      <ListItemText primary="Month" />
+                      <ListItemText primary="month" />
                     </ListItemButton>
                   </Box>
                 </BasePopup>
@@ -602,149 +595,112 @@ function Trade() {
             </Box>
 
             <Box
-              onClick={(e) => {
-                DCAEveryAnchor === null
-                  ? SetDCAEveryAnchor(e.currentTarget)
-                  : SetDCAEveryAnchor(null);
-              }}
-              width={"45%"}
-              height={"45%"}
               bgcolor={theme.palette.background.dark}
               display={"flex"}
               justifyContent={"center"}
               alignContent={"center"}
               flexDirection={"column"}
-              padding={"0.5rem"}
               borderRadius={"0.5rem"}
+              height={"75px"}
+              padding={"1rem"}
             >
               <Typography
                 color={theme.palette.secondary.main}
                 fontSize={"0.7rem"}
               >
-                Every
+                Over
               </Typography>
-              <Box
-                display={"flex"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-                padding={"0.5rem"}
-              >
+              <Box>
                 <TextField
                   variant="standard"
                   sx={{
                     minWidth: "15%",
-                    maxWidth: "25%",
+                    maxWidth: "55%",
                     "& .MuiInputBase-input": {
                       color: mode === "dark" ? "white" : "black",
                     },
                   }}
-                  placeholder="0.00"
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
-                    if (value.match(regex) || value === "") {
-                      dispatch(
-                        updateSwap({ Type: "DCAOrderInterval", Value: value })
-                      );
-                    }
-                  }}
-                  value={swapPrams.DCAOrderInterval}
+                  onChange={(e) => SetAmount(e, "DCAOverHowManyOrder")}
+                  value={swapPrams.DCAOverHowManyOrder}
                 />
-                <Typography
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  color={theme.palette.secondary.light}
-                >
-                  {swapPrams.DCAOrderIntervalUnit}
-                  <ArrowDropDown />
-                </Typography>
-                <BasePopup
-                  open={Boolean(DCAEveryAnchor)}
-                  anchor={DCAEveryAnchor}
-                >
-                  <Box
-                    width={"100%"}
-                    bgcolor={theme.palette.background.dark}
-                    padding={"1rem"}
-                    color={"white"}
-                  >
-                    <ListItemButton
-                      component="a"
-                      href="#simple-list"
-                      onClick={() =>
-                        dispatch(
-                          updateSwap({
-                            Type: "DCAOrderIntervalUnit",
-                            Value: "Minute",
-                          })
-                        )
-                      }
-                    >
-                      <ListItemText primary="Minute" />
-                    </ListItemButton>
-                    <ListItemButton
-                      component="a"
-                      href="#simple-list"
-                      onClick={() =>
-                        dispatch(
-                          updateSwap({
-                            Type: "DCAOrderIntervalUnit",
-                            Value: "Hour",
-                          })
-                        )
-                      }
-                    >
-                      <ListItemText primary="Hour" />
-                    </ListItemButton>
-                    <ListItemButton
-                      component="a"
-                      href="#simple-list"
-                      onClick={() =>
-                        dispatch(
-                          updateSwap({
-                            Type: "DCAOrderIntervalUnit",
-                            Value: "Day",
-                          })
-                        )
-                      }
-                    >
-                      <ListItemText primary="Day" />
-                    </ListItemButton>
-                    <ListItemButton
-                      component="a"
-                      href="#simple-list"
-                      onClick={() =>
-                        dispatch(
-                          updateSwap({
-                            Type: "DCAOrderIntervalUnit",
-                            Value: "Week",
-                          })
-                        )
-                      }
-                    >
-                      <ListItemText primary="Week" />
-                    </ListItemButton>
-                    <ListItemButton
-                      component="a"
-                      href="#simple-list"
-                      onClick={() =>
-                        dispatch(
-                          updateSwap({
-                            Type: "DCAOrderIntervalUnit",
-                            Value: "Month",
-                          })
-                        )
-                      }
-                    >
-                      <ListItemText primary="Month" />
-                    </ListItemButton>
-                  </Box>
-                </BasePopup>
               </Box>
             </Box>
           </Box>
-          <Box></Box>
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            bgcolor={theme.palette.background.dark}
+            borderRadius={"0.5rem"}
+            height={"100px"}
+            width={"100%"}
+            flexDirection={"column"}
+          >
+            <Box
+              display={"flex"}
+              width={"100%"}
+              gap={1}
+              justifyContent={"space-between"}
+              padding={"1rem"}
+              color={theme.palette.secondary.main}
+            >
+              <Typography fontSize={"0.75rem"}>
+                Price Range (Optional)
+              </Typography>
+              <Typography fontSize={"0.75rem"}>
+                Rate{" "}
+                {swapPrams.BuyAmount
+                  ? swapPrams.BuyAmount / swapPrams.SellAmount
+                  : "0"}{" "}
+                {tokendata[swapPrams.SwapTokenToSellId].symbol}
+                {"/"}
+                {tokendata[swapPrams.SwapTokenToBuyId].symbol}
+              </Typography>
+            </Box>
+            <Box
+              display={"flex"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              color={theme.palette.secondary.main}
+              padding={"0.5rem"}
+              width={"100%"}
+              gap={1}
+            >
+              <TextField
+                variant="standard"
+                sx={{
+                  minWidth: "15%",
+                  maxWidth: "55%",
+                  "& .MuiInputBase-input": {
+                    color: mode === "dark" ? "white" : "black",
+                    bgcolor: theme.palette.background.default,
+                    borderRadius: "0.5rem",
+                    padding: "0.2rem",
+                  },
+                }}
+                placeholder="Min Price"
+                onChange={(e) => SetAmount(e, "DCAMinPriceRange")}
+                value={swapPrams.DCAMinPriceRange}
+              />
+              -
+              <TextField
+                variant="standard"
+                sx={{
+                  minWidth: "15%",
+                  maxWidth: "55%",
+                  "& .MuiInputBase-input": {
+                    color: mode === "dark" ? "white" : "black",
+                    bgcolor: theme.palette.background.default,
+                    borderRadius: "0.5rem",
+                    padding: "0.2rem",
+                  },
+                }}
+                placeholder="Max Price"
+                onChange={(e) => SetAmount(e, "DCAMaxPriceRange")}
+                value={swapPrams.DCAMaxPriceRange}
+              />
+            </Box>
+          </Box>
         </Box>
       ) : (
         false
@@ -810,13 +766,7 @@ function Trade() {
                 }}
                 color="background"
                 placeholder="0.00"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const regex = /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/;
-                  if (value.match(regex) || value === "") {
-                    dispatch(updateSwap({ Type: "BuyAmount", Value: value }));
-                  }
-                }}
+                onChange={(e) => SetAmount(e, "BuyAmount")}
                 value={swapPrams.BuyAmount}
               />
               <Typography
@@ -936,14 +886,14 @@ function Trade() {
       <Button
         variant="contained"
         sx={{
-          fontSize: "1rem",
-          fontWeight: "bold",
+          fontSize: "1.1rem",
+
           "&:disabled": {
             bgcolor: theme.palette.primary.light,
             color: theme.palette.background.default,
           },
-          height: "4rem",
-          borderRadius: "0.5rem",
+          height: "3.5rem",
+          borderRadius: "0.8rem",
           textTransform: "none",
         }}
         disabled={swapPrams.SellAmount && swapPrams.BuyAmount ? false : true}
@@ -958,7 +908,7 @@ function Trade() {
             : "Start VA"
           : swapPrams.SellAmount
           ? "Waiting for Fetching The Price ..."
-          : "Entre Amount"}
+          : "Entre an amount"}
       </Button>
       {swapPrams.BuyAmount === 0 ? (
         <Box

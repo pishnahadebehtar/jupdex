@@ -2,28 +2,17 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material";
 import { Tooltip, tooltipClasses } from "@mui/material";
-import { QuestionMark } from "@mui/icons-material";
+
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-import SwapDetails from "./SwapDetails";
-import LimitDetails from "./LimitDetails";
-import DCADetails from "./DCADetails";
-import VADetails from "./VADetails";
+import SwapDetails from "./SwapComponents/SwapDetails";
+import LimitDetails from "./LimitComponents/LimitDetails";
+import DCADetails from "./DCAComponents/DCADetails";
+import VADetails from "./VAComponents/VADetails";
 
 function MoreInfo() {
   const theme = useTheme();
-  const BootstrapTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: "transparent",
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.common.black,
-    },
-  }));
   const SwapPrams = useSelector((state) => state.SwapSlice);
-  const Settings = useSelector((state) => state.SettingSlice);
   return (
     <Box>
       <Card

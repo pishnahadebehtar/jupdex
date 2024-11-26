@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateSettingStates } from "../state/SettingSlice";
+import { updateSettingStates } from "../../../../state/SettingSlice.js";
 import { useTheme } from "@mui/material";
 function AutoSetting() {
   const dispatch = useDispatch();

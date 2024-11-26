@@ -5,7 +5,7 @@ import { Tooltip, tooltipClasses } from "@mui/material";
 import { QuestionMark } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-import tokendata from "../assets/tokenData.js";
+import tokendata from "../../../../assets/tokenData.js";
 function LimitDetails() {
   const theme = useTheme();
   const BootstrapTooltip = styled(({ className, ...props }) => (

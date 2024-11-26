@@ -7,16 +7,15 @@ import { useTheme } from "@mui/material";
 import ReplayIcon from "@mui/icons-material/Replay";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Trade from "./Trade.jsx";
-import SwapSetting from "./SwapSetting.jsx";
-import { updateSettingStates } from "../state/SettingSlice";
+import SwapSetting from "./SwapComponents/SwapSetting.jsx";
+import { updateSettingStates } from "../../../state/SettingSlice.js";
 import { useSelector, useDispatch } from "react-redux";
-import SelectToken from "./SelectToken.jsx";
-import { updateSwap } from "../state/SwapSlice.js";
-import tokenListData from "../assets/tokenData.js";
-import TradingViewWidget from "./TradingViewWidget.jsx";
-
+import SelectToken from "../../SelectToken.jsx";
+import { updateSwap } from "../../../state/SwapSlice.js";
+import tokenListData from "../../../assets/tokenData.js";
+import TradingViewWidget from "../../TradingViewWidget.jsx";
 import { Cancel, Repeat } from "@mui/icons-material";
-import MiniChart from "./MiniChart.jsx";
+import MiniChart from "./SwapComponents/MiniChart.jsx";
 function Spot() {
   const matches = useMediaQuery("(min-width:800px)");
   const theme = useTheme();
@@ -105,7 +104,7 @@ function Spot() {
           }}
         >
           <img
-            src={require("../assets/mobilemascot.png")}
+            src={require("../../../assets/mobilemascot.png")}
             alt="mobilemascot"
             width="255px"
             height="255px"
