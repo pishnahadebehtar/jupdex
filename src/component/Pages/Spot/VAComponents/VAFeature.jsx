@@ -9,6 +9,8 @@ import { updateSwap } from "../../../../state/SwapSlice";
 import { useTheme } from "@mui/material";
 import { useState } from "react";
 import tokendata from "../../../../assets/tokenData.js";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 function VAFeatures() {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -199,9 +201,51 @@ function VAFeatures() {
               color={theme.palette.secondary.light}
               fontSize={"0.9rem"}
             >
-              {DateButton === "Start Date"
-                ? "Start Date"
-                : "mm/dd/yyyy --:-- --"}
+              {DateButton === "Start Date" ? (
+                "Start Date"
+              ) : (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    views={["month", "day", "year"]}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        // Remove padding from the input root
+                        // Set height to auto
+                        "& fieldset": {
+                          border: "none",
+                          // Remove border if needed
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Ensure no border on hover
+                        },
+                        "& .MuiInputBase-input": {
+                          padding: 0,
+                          color: "white", // Remove padding from the input itself
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Ensure no border when focused
+                        },
+                      },
+                      "& .MuiSvgIcon-root": {
+                        color: theme.palette.secondary.main,
+                        padding: 0, // Change icon color
+                      },
+                      "& .MuiPickersDay-root": {
+                        color: "white", // Change day text color to white
+                      },
+                      "& .MuiPickersCalendarHeader-root": {
+                        color: "white", // Change calendar header text color to white
+                      },
+                      "& .MuiPickersYear-yearButton": {
+                        color: "white", // Change year selection text color to white
+                      },
+                      "& .MuiPickersMonth-root": {
+                        color: "white", // Change month selection text color to white
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              )}
             </Typography>
           </Box>
         </Box>
