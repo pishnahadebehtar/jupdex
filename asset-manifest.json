@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/jupdex/static/css/main.aceba15d.css",
-    "main.js": "/jupdex/static/js/main.ff38096e.js",
+    "main.js": "/jupdex/static/js/main.1ee4551b.js",
     "static/media/doge.png": "/jupdex/static/media/doge.a9424efadeaad7cd97e7.png",
     "static/media/logo.png": "/jupdex/static/media/logo.cd15d39fcbe9f213779a.png",
     "static/media/eth.png": "/jupdex/static/media/eth.a85b6de0dc4a013ae2f8.png",
@@ -16,10 +16,10 @@
     "static/media/avax.png": "/jupdex/static/media/avax.e1fb45e8e070674b1a54.png",
     "index.html": "/jupdex/index.html",
     "main.aceba15d.css.map": "/jupdex/static/css/main.aceba15d.css.map",
-    "main.ff38096e.js.map": "/jupdex/static/js/main.ff38096e.js.map"
+    "main.1ee4551b.js.map": "/jupdex/static/js/main.1ee4551b.js.map"
   },
   "entrypoints": [
     "static/css/main.aceba15d.css",
-    "static/js/main.ff38096e.js"
+    "static/js/main.1ee4551b.js"
   ]
 }
