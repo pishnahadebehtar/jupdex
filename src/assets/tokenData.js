@@ -6,8 +6,8 @@ const tokenListData = [
 
     contractAddress: "xiosddasoiemferui",
     Verified: true,
-    pair: [
-      ["USDT", "BINANCE:1/BTCUSD"],
+    pairs: [
+      ["USDT", "1/BINANCE:BTCUSD"],
       ["ETH", "BINANCE:ETHBTC"],
       ["DOT", "BINANCE:DOTBTC"],
       ["SOL", "BINANCE:SOLBTC"],
@@ -24,9 +24,9 @@ const tokenListData = [
 
     contractAddress: "xiosddasoiemferui",
     Verified: true,
-    pair: [
-      ["BTC", "BINANCE:1/ETHBTC"],
-      ["USDT", "BINANCE:1/ETHUSD"],
+    pairs: [
+      ["BTC", "1/BINANCE:ETHBTC"],
+      ["USDT", "1/BINANCE:ETHUSD"],
       ["DOT", "BINANCE:DOTETH"],
       ["SOL", "BINANCE:SOLETH"],
       ["TON", "BINANCE:TONETH"],
@@ -42,7 +42,7 @@ const tokenListData = [
 
     contractAddress: "xiosddasoiemferui",
     Verified: false,
-    pair: [
+    pairs: [
       ["BTC", "BINANCE:BTCUSD"],
       ["ETH", "BINANCE:ETHUSD"],
       ["DOT", "BINANCE:DOTUSD"],
@@ -60,11 +60,11 @@ const tokenListData = [
 
     contractAddress: "xiosddasoiemferui",
     Verified: true,
-    pair: [
-      ["BTC", "BINANCE:1/SOLBTC"],
-      ["USDT", "BINANCE:1/SOLETH"],
+    pairs: [
+      ["BTC", "1/BINANCE:SOLBTC"],
+      ["USDT", "1/BINANCE:SOLETH"],
       ["DOT", "BITRUE:DOTSOL"],
-      ["BNB", "BINANCE:1/SOLBNB"],
+      ["BNB", "1/BINANCE:SOLBNB"],
       ["DOGE", "BITRUE:DOGESOL"],
       ["AVAX", "BITRUE:AVAXSOL"],
     ],
@@ -75,12 +75,12 @@ const tokenListData = [
     symbol: "DOT",
     contractAddress: "xiosddasoiemferui",
     Verified: true,
-    pair: [
-      ["BTC", "BINANCE:1/DOTBTC"],
-      ["ETH", "BINANCE:1/DOTETH"],
-      ["USDT", "BINANCE:1/DOTUSD"],
-      ["SOL", "BITRUE:1/DOTSOL"],
-      ["BNB", "BINANCE:1/DOTBNB"],
+    pairs: [
+      ["BTC", "1/BINANCE:DOTBTC"],
+      ["ETH", "1/BINANCE:DOTETH"],
+      ["USDT", "1/BINANCE:DOTUSD"],
+      ["SOL", "1/BITRUE:DOTSOL"],
+      ["BNB", "1/BINANCE:DOTBNB"],
     ],
   },
   {
@@ -89,9 +89,9 @@ const tokenListData = [
     symbol: "TON",
     contractAddress: "xiosddasoiemferui",
     Verified: true,
-    pair: [
-      ["BTC", "BINANCE:1/TONBTC"],
-      ["USDT", "BINANCE:1/TONUSD"],
+    pairs: [
+      ["BTC", "1/BINANCE:TONBTC"],
+      ["USDT", "1/BINANCE:TONUSD"],
     ],
   },
   {
@@ -100,29 +100,39 @@ const tokenListData = [
     symbol: "BNB",
     contractAddress: "xiosddasoiemferui",
     Verified: true,
-    pair: [
+    pairs: [
       ["BTC", "POLONIEX:BTCBNB"],
-      ["ETH", "BINANCE:1/BNBETH"],
-      ["USDT", "BINANCE:DOTUSD"],
-      ["SOL", "BITRUE:DOTSOL"],
-      ["BNB", "BINANCE:DOTBNB"],
+      ["ETH", "1/BINANCE:BNBETH"],
+      ["USDT", "1/BINANCE:BNBUSD"],
+      ["SOL", "BINANCE:SOLBNB"],
+      ["AVAX", "BINANCE:AVAXBNB"],
     ],
   },
   {
     id: 7,
     name: "doge",
     symbol: "DOGE",
-
     contractAddress: "xiosddasoiemferui",
     Verified: true,
+    pairs: [
+      ["BTC", "1/BINANCE:DOGEBTC"],
+      ["ETH", "1/GEMINI:DOGEETH"],
+      ["USDT", "1/BINANCE:DOGEUSDT"],
+      ["SOL", "1/BITRUE:DOGESOL"],
+    ],
   },
   {
     id: 8,
     name: "avax",
     symbol: "AVAX",
-
     contractAddress: "xiosddasoiemferui",
     Verified: true,
+    pairs: [
+      ["BTC", "1/BINANCE:DOGEBTC"],
+      ["ETH", "1/GEMINI:DOGEETH"],
+      ["USDT", "1/BINANCE:DOGEUSDT"],
+      ["SOL", "1/BITRUE:DOGESOL"],
+    ],
   },
 ];
 

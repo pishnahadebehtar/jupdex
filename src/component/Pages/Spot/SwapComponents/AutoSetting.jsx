@@ -24,13 +24,13 @@ function AutoSetting() {
       >
         <Box>
           <Typography
-            fontSize={"0.75rem"}
+            fontSize={"0.7rem"}
             color={theme.palette.secondary.light}
             fontWeight={600}
           >
             Slippage Mode
           </Typography>
-          <Typography fontSize={"0.75rem"} color={theme.palette.secondary.main}>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
             Set slippage based on simulation and heuristics.
           </Typography>
         </Box>
@@ -42,12 +42,13 @@ function AutoSetting() {
           }}
         >
           <Button
-            size="medium"
+            size="small"
             sx={{
-              fontSize: "0.75rem",
+              fontSize: "0.7rem",
               color: theme.palette.primary.main,
               borderRadius: "1.2rem",
               bgcolor: "rgb(44 48 40)",
+              borderRadius: "1.2rem",
             }}
           >
             Dynamic
@@ -62,17 +63,28 @@ function AutoSetting() {
       >
         <Box>
           <Typography
-            fontSize={"0.75rem"}
+            fontSize={"0.7rem"}
             color={theme.palette.secondary.light}
             fontWeight={600}
           >
             Transaction Fees
           </Typography>
-          <Typography fontSize={"0.75rem"} color={theme.palette.secondary.main}>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
             Set max cap based on trade size.
           </Typography>
         </Box>
-        <Button>Dynamic</Button>
+        <Button
+          size="small"
+          sx={{
+            fontSize: "0.7rem",
+            color: theme.palette.primary.main,
+            borderRadius: "1.2rem",
+            bgcolor: "rgb(44 48 40)",
+            borderRadius: "1.2rem",
+          }}
+        >
+          Dynamic
+        </Button>
       </Box>
       <Box
         display="flex"
@@ -82,13 +94,13 @@ function AutoSetting() {
       >
         <Box>
           <Typography
-            fontSize={"0.75rem"}
+            fontSize={"0.7rem"}
             color={theme.palette.secondary.light}
             fontWeight={600}
           >
             MEV Protect
           </Typography>
-          <Typography fontSize={"0.75rem"} color={theme.palette.secondary.main}>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
             Enable to prevent sandwich/front-run.
           </Typography>
         </Box>
@@ -96,10 +108,11 @@ function AutoSetting() {
           sx={{
             bgcolor: theme.palette.background.default,
             borderRadius: "1.2rem",
-            fontSize: "0.75rem",
+            fontSize: "0.7rem",
           }}
         >
           <Button
+            size="small"
             variant="oulined"
             sx={{
               margin: "0.2rem",
@@ -113,7 +126,8 @@ function AutoSetting() {
               "&:hover": {
                 color: theme.palette.info.dark,
               },
-              fontSize: "0.75rem",
+              fontSize: "0.7rem",
+              padding: 0,
             }}
             onClick={() =>
               dispatch(
@@ -127,6 +141,7 @@ function AutoSetting() {
             Enable
           </Button>
           <Button
+            size="small"
             variant="oulined"
             sx={{
               margin: "0.2rem",
@@ -140,7 +155,8 @@ function AutoSetting() {
               "&:hover": {
                 color: theme.palette.info.dark,
               },
-              fontSize: "0.8rem",
+              fontSize: "0.7rem",
+              padding: 0,
             }}
             onClick={() =>
               dispatch(

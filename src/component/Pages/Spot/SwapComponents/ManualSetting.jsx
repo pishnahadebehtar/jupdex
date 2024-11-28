@@ -15,7 +15,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 function ManualSetting() {
   const dispatch = useDispatch();
   const SettingState = useSelector((state) => state.SettingSlice);
@@ -30,17 +29,18 @@ function ManualSetting() {
         justifyContent="space-between"
         gap={2}
       >
-        <Typography color={theme.palette.secondary.light}>Slippage</Typography>
+        <Typography fontSize={"0.9rem"} color={theme.palette.secondary.light}>
+          Slippage
+        </Typography>
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
           width="100%"
         >
-          <Typography color={theme.palette.secondary.main}>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
             Slippage Mode
           </Typography>
-
           <Box
             sx={{
               bgcolor: theme.palette.background.dark,
@@ -70,7 +70,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               onClick={() => {
                 dispatch(
@@ -84,6 +85,7 @@ function ManualSetting() {
               Dynamic
             </Button>
             <Button
+              size="small"
               sx={{
                 margin: "0.2rem",
                 borderRadius: "1.2rem",
@@ -100,7 +102,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               color={
                 SettingState.SlippageMode === "dynamic"
@@ -127,10 +130,12 @@ function ManualSetting() {
             alignItems="center"
             width="100%"
           >
-            <Typography color={theme.palette.secondary.main}>
+            <Typography
+              fontSize={"0.7rem"}
+              color={theme.palette.secondary.main}
+            >
               Fixed Slippage
             </Typography>
-
             <Box
               display={"flex"}
               justifyContent={"center"}
@@ -142,6 +147,7 @@ function ManualSetting() {
               }}
             >
               <Button
+                size="small"
                 sx={{
                   margin: "0.2rem",
                   borderRadius: "1.2rem",
@@ -149,7 +155,6 @@ function ManualSetting() {
                     SettingState.FixedSlippage === 0.5
                       ? "rgba(199, 242, 132, 0.1)"
                       : "rgba(19,27,36,.1)",
-
                   color:
                     SettingState.FixedSlippage === 0.5
                       ? theme.palette.primary.main
@@ -158,7 +163,8 @@ function ManualSetting() {
                     bgcolor: "rgba(199, 242, 132, 0.1)",
                     color: theme.palette.secondary.light,
                   },
-                  fontSize: "0.8rem",
+                  fontSize: "0.7rem",
+                  padding: "0.1rem",
                 }}
                 color={
                   SettingState.FixedSlippage === 0.5 ? "primary" : "secondary"
@@ -176,6 +182,7 @@ function ManualSetting() {
                 0.5%
               </Button>
               <Button
+                size="small"
                 sx={{
                   margin: "0.2rem",
                   borderRadius: "1.2rem",
@@ -192,7 +199,8 @@ function ManualSetting() {
                     bgcolor: "rgba(199, 242, 132, 0.1)",
                     color: theme.palette.secondary.light,
                   },
-                  fontSize: "0.8rem",
+                  fontSize: "0.7rem",
+                  padding: "0.1rem",
                 }}
                 color={
                   SettingState.FixedSlippage === 1 ? "primary" : "secondary"
@@ -214,6 +222,7 @@ function ManualSetting() {
                 sx={{
                   "& .MuiInputBase-input": {
                     color: "white",
+                    fontSize: "0.7rem",
                   },
                 }}
                 color="background"
@@ -245,15 +254,18 @@ function ManualSetting() {
             alignItems="center"
             width="100%"
           >
-            <Typography color={theme.palette.secondary.main}>
+            <Typography
+              fontSize={"0.7rem"}
+              color={theme.palette.secondary.main}
+            >
               Max Slippage
             </Typography>
-
             <TextField
               size="small"
               sx={{
                 "& .MuiInputBase-input": {
                   color: "white",
+                  fontSize: "0.7rem",
                 },
               }}
               color="background"
@@ -293,7 +305,7 @@ function ManualSetting() {
         width="100%"
         gap={2}
       >
-        <Typography color={theme.palette.secondary.light}>
+        <Typography fontSize={"0.7rem"} color={theme.palette.secondary.light}>
           Transaction Broadcasting
         </Typography>
         <Box
@@ -302,7 +314,7 @@ function ManualSetting() {
           alignItems="center"
           width="100%"
         >
-          <Typography color={theme.palette.secondary.main}>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
             Broadcast Mode
           </Typography>
 
@@ -317,6 +329,7 @@ function ManualSetting() {
             }}
           >
             <Button
+              size="small"
               sx={{
                 margin: "0.2rem",
                 borderRadius: "1.2rem",
@@ -333,7 +346,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               color={
                 SettingState.BroadcastMode === "PriorityFee"
@@ -352,6 +366,7 @@ function ManualSetting() {
               Priority Fee
             </Button>
             <Button
+              size="small"
               sx={{
                 margin: "0.2rem",
                 borderRadius: "1.2rem",
@@ -359,7 +374,6 @@ function ManualSetting() {
                   SettingState.BroadcastMode === "JitoOnly"
                     ? "rgba(199, 242, 132, 0.1)"
                     : "rgba(19,27,36,.1)",
-
                 color:
                   SettingState.BroadcastMode === "JitoOnly"
                     ? theme.palette.primary.main
@@ -368,7 +382,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               color={
                 SettingState.BroadcastMode === "JitoOnly"
@@ -387,6 +402,7 @@ function ManualSetting() {
               Jito Only
             </Button>
             <Button
+              size="small"
               sx={{
                 margin: "0.2rem",
                 borderRadius: "1.2rem",
@@ -403,7 +419,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               color={
                 SettingState.BroadcastMode === "Both" ? "primary" : "secondary"
@@ -428,7 +445,12 @@ function ManualSetting() {
             alignItems="center"
             width="100%"
           >
-            <Typography color={theme.palette.secondary.main}>Speed</Typography>
+            <Typography
+              fontSize={"0.7rem"}
+              color={theme.palette.secondary.main}
+            >
+              Speed
+            </Typography>
             <Box
               sx={{
                 bgcolor: theme.palette.background.dark,
@@ -437,6 +459,7 @@ function ManualSetting() {
               }}
             >
               <Button
+                size="small"
                 sx={{
                   margin: "0.2rem",
                   borderRadius: "1.2rem",
@@ -453,7 +476,8 @@ function ManualSetting() {
                     bgcolor: "rgba(199, 242, 132, 0.1)",
                     color: theme.palette.secondary.light,
                   },
-                  fontSize: "0.8rem",
+                  fontSize: "0.7rem",
+                  padding: "0.1rem",
                 }}
                 color={SettingState.Speed === "Fast" ? "primary" : "secondary"}
                 onClick={() => {
@@ -468,6 +492,7 @@ function ManualSetting() {
                 Fast
               </Button>
               <Button
+                size="small"
                 sx={{
                   margin: "0.2rem",
                   borderRadius: "1.2rem",
@@ -484,7 +509,8 @@ function ManualSetting() {
                     bgcolor: "rgba(199, 242, 132, 0.1)",
                     color: theme.palette.secondary.light,
                   },
-                  fontSize: "0.8rem",
+                  fontSize: "0.7rem",
+                  padding: "0.1rem",
                 }}
                 color={SettingState.Speed === "Turbo" ? "primary" : "secondary"}
                 onClick={() => {
@@ -499,6 +525,7 @@ function ManualSetting() {
                 Turbo
               </Button>
               <Button
+                size="small"
                 sx={{
                   margin: "0.2rem",
                   borderRadius: "1.2rem",
@@ -515,7 +542,8 @@ function ManualSetting() {
                     bgcolor: "rgba(199, 242, 132, 0.1)",
                     color: theme.palette.secondary.light,
                   },
-                  fontSize: "0.8rem",
+                  fontSize: "0.7rem",
+                  padding: "0.1rem",
                 }}
                 color={SettingState.Speed === "Ultra" ? "primary" : "secondary"}
                 onClick={() => {
@@ -538,7 +566,9 @@ function ManualSetting() {
           alignItems="center"
           width="100%"
         >
-          <Typography color={theme.palette.secondary.main}>Fee Mode</Typography>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
+            Fee Mode
+          </Typography>
 
           <Box
             display={"flex"}
@@ -551,6 +581,7 @@ function ManualSetting() {
             }}
           >
             <Button
+              size="small"
               sx={{
                 margin: "0.2rem",
                 borderRadius: "1.2rem",
@@ -567,7 +598,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               color={
                 SettingState.FeeMode === "MaxCap" ? "primary" : "secondary"
@@ -584,6 +616,7 @@ function ManualSetting() {
               Max Cap
             </Button>
             <Button
+              size="small"
               sx={{
                 margin: "0.2rem",
                 borderRadius: "1.2rem",
@@ -600,7 +633,8 @@ function ManualSetting() {
                   bgcolor: "rgba(199, 242, 132, 0.1)",
                   color: theme.palette.secondary.light,
                 },
-                fontSize: "0.8rem",
+                fontSize: "0.7rem",
+                padding: "0.1rem",
               }}
               color={
                 SettingState.FeeMode === "ExactFee" ? "primary" : "secondary"
@@ -624,7 +658,7 @@ function ManualSetting() {
           alignItems="center"
           width="100%"
         >
-          <Typography color={theme.palette.secondary.main}>
+          <Typography fontSize={"0.7rem"} color={theme.palette.secondary.main}>
             {SettingState.FeeMode === "MaxCap" ? "Set Max Cap" : "Exact Fee"}
           </Typography>
 
@@ -633,6 +667,7 @@ function ManualSetting() {
             sx={{
               "& .MuiInputBase-input": {
                 color: "white",
+                fontSize: "0.7rem",
               },
             }}
             color="background"
@@ -672,7 +707,11 @@ function ManualSetting() {
             expandIcon={<ExpandMoreIcon color="secondary" />}
             aria-controls="advanced settings"
             id="advanced-settings"
-            sx={{ color: theme.palette.secondary.light, fontWeight: 800 }}
+            sx={{
+              color: theme.palette.secondary.light,
+              fontWeight: 800,
+              fontSize: "0.7rem",
+            }}
           >
             Advanced Settings
           </AccordionSummary>
@@ -683,8 +722,9 @@ function ManualSetting() {
               justifyContent="space-between"
               width="100%"
             >
-              <Typography>Direct Route Only</Typography>
+              <Typography fontSize={"0.7rem"}>Direct Route Only</Typography>
               <Switch
+                size="small"
                 checked={SettingState.DirectRoutOnly}
                 onChange={(e) =>
                   dispatch(
@@ -702,8 +742,9 @@ function ManualSetting() {
               justifyContent="space-between"
               width="100%"
             >
-              <Typography>Use wSOL</Typography>
+              <Typography fontSize={"0.7rem"}>Use wSOL</Typography>
               <Switch
+                size="small"
                 checked={SettingState.UsewSOL}
                 onChange={(e) =>
                   dispatch(
@@ -721,8 +762,9 @@ function ManualSetting() {
               justifyContent="space-between"
               width="100%"
             >
-              <Typography>AMM Exclusion</Typography>
+              <Typography fontSize={"0.7rem"}>AMM Exclusion</Typography>
               <Switch
+                size="small"
                 checked={SettingState.AMMExclusion}
                 onChange={(e) =>
                   dispatch(
@@ -734,7 +776,9 @@ function ManualSetting() {
                 }
               />
             </Box>
-            <Typography fontSize="1rem">No amms are being excluded.</Typography>
+            <Typography fontSize="0.7rem">
+              No amms are being excluded.
+            </Typography>
           </AccordionDetails>
         </Accordion>
       </Box>

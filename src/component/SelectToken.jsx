@@ -20,6 +20,126 @@ function SelectToken() {
   const dispatch = useDispatch();
   const swapPrams = useSelector((state) => state.SwapSlice);
   const [search, SetSearch] = useState("");
+  const SellSideTokenObject = tokenListData.find(
+    (token) => token.id === swapPrams.SwapTokenToSellId
+  );
+  const BuySideTokenOptions = tokenListData.filter((token) =>
+    SellSideTokenObject.pairs.some((pair) => token.symbol === pair[0])
+  );
+  const handleFilter = (token) => {
+    return search === ""
+      ? true
+      : token.name.toLowerCase().includes(search.toLowerCase()) ||
+          token.symbol.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+  };
+  const handleSelectToken = (token) => {
+    const isSame =
+      swapPrams.SelectSwapTokenSide === "Sell"
+        ? swapPrams.SwapTokenToBuyId === token.id
+        : swapPrams.SwapTokenToSellId === token.id;
+    if (isSame) {
+      dispatch(
+        updateSwap({
+          Type:
+            swapPrams.SelectSwapTokenSide === "Sell"
+              ? "SwapTokenToBuyId"
+              : "SwapTokenToSellId",
+          Value:
+            swapPrams.SelectSwapTokenSide === "Sell"
+              ? swapPrams.SwapTokenToSellId
+              : swapPrams.SwapTokenToBuyId,
+        })
+      );
+    }
+
+    dispatch(
+      updateSwap({
+        Type:
+          swapPrams.SelectSwapTokenSide === "Sell"
+            ? "SwapTokenToSellId"
+            : "SwapTokenToBuyId",
+        Value: token.id,
+      })
+    );
+    dispatch(
+      updateSwap({
+        Type: "SelectSwapTokenOpen",
+        Value: "Close",
+      })
+    );
+  };
+  const handleMap = (token, index) => {
+    return (
+      <Box
+        key={index}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+          padding: "1rem",
+
+          "&:hover": {
+            bgcolor: theme.palette.background.default,
+            borderRadius: "10px",
+            cursor: "pointer",
+          },
+        }}
+        onClick={() => handleSelectToken(token)}
+      >
+        <Box
+          sx={{
+            display: "flex",
+
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <img
+            src={require(`../assets/${token.name}.png`)}
+            width="35px"
+            height="35px"
+            alt={token.name}
+          />
+          <Box
+            display="flex"
+            alignItems="flex-start"
+            flexDirection="column"
+            justifyContent="center"
+            margin={1}
+          >
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                color: grey[500],
+              }}
+            >
+              {token.symbol}{" "}
+              <VerifiedIcon color="primary" sx={{ padding: "3px" }} />
+            </Typography>
+            <Typography sx={{ color: grey[500] }}>{token.name} </Typography>
+            <Typography
+              sx={{
+                width: "70%",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                color: grey[700],
+              }}
+            >
+              {token.contractAddress}
+            </Typography>
+          </Box>
+        </Box>
+        <Box>
+          <Typography color={{ color: grey[500] }}> {token.price} </Typography>
+        </Box>
+      </Box>
+    );
+  };
+  console.log(swapPrams.SelectSwapTokenSide);
   return (
     <Box
       p={2}
@@ -143,108 +263,13 @@ function SelectToken() {
                 overflowY: "scroll",
               }}
             >
-              {tokenListData
-                .filter((token) =>
-                  search === ""
-                    ? true
-                    : token.name.toLowerCase().includes(search.toLowerCase()) ||
-                      token.symbol
-                        .toLocaleLowerCase()
-                        .includes(search.toLocaleLowerCase())
-                )
-                .map((token, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      padding: "1rem",
-
-                      "&:hover": {
-                        bgcolor: theme.palette.background.default,
-                        borderRadius: "10px",
-                        cursor: "pointer",
-                      },
-                    }}
-                    onClick={() => {
-                      dispatch(
-                        updateSwap({
-                          Type:
-                            swapPrams.SelectSwapTokenSide === "Sell"
-                              ? "SwapTokenToSellId"
-                              : "SwapTokenToBuyId",
-                          Value: token.id,
-                        })
-                      );
-                      dispatch(
-                        updateSwap({
-                          Type: "SelectSwapTokenOpen",
-                          Value: "Close",
-                        })
-                      );
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <img
-                        src={require(`../assets/${token.name}.png`)}
-                        width="35px"
-                        height="35px"
-                        alt={token.name}
-                      />
-                      <Box
-                        display="flex"
-                        alignItems="flex-start"
-                        flexDirection="column"
-                        justifyContent="center"
-                        margin={1}
-                      >
-                        <Typography
-                          sx={{
-                            fontWeight: "bold",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            color: grey[500],
-                          }}
-                        >
-                          {token.symbol}{" "}
-                          <VerifiedIcon
-                            color="primary"
-                            sx={{ padding: "3px" }}
-                          />
-                        </Typography>
-                        <Typography sx={{ color: grey[500] }}>
-                          {token.name}{" "}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            width: "70%",
-                            textOverflow: "ellipsis",
-                            overflow: "hidden",
-                            color: grey[700],
-                          }}
-                        >
-                          {token.contractAddress}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box>
-                      <Typography color={{ color: grey[500] }}>
-                        {" "}
-                        {token.price}{" "}
-                      </Typography>
-                    </Box>
-                  </Box>
-                ))}
+              {swapPrams.SelectSwapTokenSide === "Sell"
+                ? tokenListData
+                    .filter((token) => handleFilter(token))
+                    .map((token, index) => handleMap(token, index))
+                : BuySideTokenOptions.filter((token) =>
+                    handleFilter(token)
+                  ).map((token, index) => handleMap(token, index))}
             </Box>
           </Box>
         </Box>

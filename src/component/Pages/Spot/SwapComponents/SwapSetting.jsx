@@ -47,7 +47,7 @@ function SwapSetting() {
         alignItems={"center"}
         color={theme.palette.secondary.dark}
         sx={{
-          width: match ? "45%" : "95%",
+          width: match ? "45%" : "97%",
           borderRadius: "10px",
           boxShadow: `0 0 0.08rem  ${grey[200]}`,
         }}
@@ -64,7 +64,7 @@ function SwapSetting() {
               },
               "& .MuiCardHeader-title": {
                 color: "white",
-                fontSize: "1.25rem",
+                fontSize: "1rem",
               },
             }}
             title="Swap Settings"
@@ -79,12 +79,12 @@ function SwapSetting() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-
                   borderRadius: "1.2rem",
                   bgcolor: theme.palette.background.dark,
                 }}
               >
                 <Button
+                  size="small"
                   variant="oulined"
                   color={SwapSettingState === "Auto" ? "info" : "secondary"}
                   sx={{
@@ -101,7 +101,8 @@ function SwapSetting() {
                     "&:hover": {
                       color: theme.palette.info.dark,
                     },
-                    fontSize: "0.8rem",
+                    fontSize: "0.7rem",
+                    padding: "0.1rem",
                   }}
                   onClick={() => {
                     dispatch(
@@ -127,6 +128,7 @@ function SwapSetting() {
                   Auto
                 </Button>
                 <Button
+                  size="small"
                   variant="oulined"
                   sx={{
                     margin: "0.2rem",
@@ -142,7 +144,8 @@ function SwapSetting() {
                     "&:hover": {
                       color: theme.palette.info.dark,
                     },
-                    fontSize: "0.8rem",
+                    fontSize: "0.7rem",
+                    padding: "0.1rem",
                   }}
                   onClick={() => {
                     dispatch(
@@ -211,10 +214,11 @@ function SwapSetting() {
               sx={{
                 bgcolor: theme.palette.primary.main,
                 color: theme.palette.background.dark,
-                fontSize: "1.25rem",
+                fontSize: "1rem",
                 fontWeight: "bold",
                 borderRadius: "20px",
                 width: "100%",
+                height: "60px",
                 "&:hover": {
                   bgcolor: theme.palette.primary.dark,
                 },

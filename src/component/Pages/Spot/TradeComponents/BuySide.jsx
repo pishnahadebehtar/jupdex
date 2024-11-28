@@ -34,7 +34,7 @@ function BuySide() {
   }.png`);
   return (
     <Box
-      onClick={() => selectSideFocus("SellSide")}
+      onClick={() => selectSideFocus("BuySide")}
       sx={{
         width: "100%",
         minHeight: "20vh",
@@ -46,11 +46,11 @@ function BuySide() {
 
         borderRadius: "10px",
         border:
-          selected === "SellSide"
+          selected === "BuySide"
             ? `1px solid ${theme.palette.primary.dark}`
             : "none",
         boxShadow:
-          selected === "SellSide"
+          selected === "BuySide"
             ? `0 0 0.5rem ${theme.palette.primary.dark}`
             : "none",
       }}
@@ -166,7 +166,6 @@ function BuySide() {
               }}
               color="background"
               placeholder="0.00"
-              onChange={(e) => SetAmount(e, "BuyAmount")}
               value={swapPrams.BuyAmount}
             />
           </Box>

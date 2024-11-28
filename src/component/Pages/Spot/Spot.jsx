@@ -18,12 +18,11 @@ import { Cancel, Repeat } from "@mui/icons-material";
 import MiniChart from "./SwapComponents/MiniChart.jsx";
 import SwapMode from "./SpotFeatures/SwapMode.jsx";
 import OrderList from "./SpotFeatures/OrderList.jsx";
+import DesktopMascot from "./DesktopMascot.jsx";
 function Spot() {
   const matches = useMediaQuery("(min-width:800px)");
   const theme = useTheme();
   const [clockChecked, setClockChecked] = React.useState(false);
-
-  const [LimitDataMode, SetLimitDataMode] = useState("orders");
   const SwapSettingState = useSelector(
     (state) => state.SettingSlice.SwapSettingState
   );
@@ -61,7 +60,7 @@ function Spot() {
           }`,
           {
             headers: {
-              "X-CoinAPI-Key": "API_KEy", // Replace with your API key
+              "X-CoinAPI-Key": "2da4da1b-35a7-418a-a7d7-49d7f4d6896b", // Replace with your API key
             },
           }
         )
@@ -73,7 +72,12 @@ function Spot() {
       }
     }
     PriceApi();
-  }, [SwapPrams.SellAmount, dispatch]);
+  }, [
+    SwapPrams.SellAmount,
+    SwapPrams.SwapTokenToBuyId,
+    SwapPrams.SwapTokenToSellId,
+    dispatch,
+  ]);
   useEffect(() => {
     console.log("test");
     dispatch(
@@ -86,36 +90,12 @@ function Spot() {
     );
   }, [PriceData]);
   //body of component starts here
+  console.log(PriceData);
   return (
     <Box>
       {SettingPageOpen ? <SwapSetting /> : false}
       {SelectSwapTokenOpen === "Open" ? <SelectToken /> : false}
-      {matches ? (
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: "-35vh",
-            left: "-15vw",
-            transition: "5.5s",
-            opacity: 1,
-            "& :hover": {
-              transform: "translate(150px, -150px)",
-              transition: "1s",
-              opacity: 0,
-            },
-          }}
-        >
-          <img
-            src={require("../../../assets/mobilemascot.png")}
-            alt="mobilemascot"
-            width="255px"
-            height="255px"
-          />
-        </Box>
-      ) : (
-        false
-      )}
-
+      {matches ? <DesktopMascot /> : false}
       <Box
         sx={{
           display: "flex",
@@ -141,7 +121,6 @@ function Spot() {
         ) : (
           false
         )}
-
         <Box
           p={1}
           minHeight={"100vh"}

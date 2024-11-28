@@ -243,6 +243,14 @@ function VAFeatures() {
                         color: "white", // Change month selection text color to white
                       },
                     }}
+                    onChange={(e) =>
+                      dispatch(
+                        updateSwap({
+                          Type: "VAStartDate",
+                          Value: e.toISOString(),
+                        })
+                      )
+                    }
                   />
                 </LocalizationProvider>
               )}
